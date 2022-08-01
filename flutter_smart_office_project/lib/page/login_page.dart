@@ -12,7 +12,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter_casa0015_mobile_app/formatter.dart';
 // import 'package:flutter_casa0015_mobile_app/page/add_receipt_page.dart';
-// import 'package:flutter_casa0015_mobile_app/page/spending_base_page.dart';
+import 'package:flutter_smart_office_project/page/smart_base_page.dart';
 import 'package:provider/provider.dart';
 
 import '../firebase_options.dart';
@@ -27,7 +27,7 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Money Tracker'),
+        title: const Text('Smart Office'),
       ),
       body: ListView(
         children: <Widget>[
@@ -858,13 +858,12 @@ class _StartHomeState extends State<StartHome> {
               onPressed: () async {
                 if (widget.email != null) {
 
-                  // await Future.delayed(Duration(milliseconds: 1000), () {});
-                  // Navigator.of(context).push(
-                  //   MaterialPageRoute(
-                  //     builder: (context) =>
-                  //         SpendingBasePage(email: widget.email!),
-                  //   ),
-                  // );
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) =>
+                          SmartBasePage(email: widget.email!),
+                    ),
+                  );
                 }
               },
 
