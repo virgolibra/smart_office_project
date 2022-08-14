@@ -6,11 +6,8 @@ import 'dart:io';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
 
-final client = MqttServerClient.withPort(myMqttBroker, '',myMqttPort);
+final client = MqttServerClient.withPort(myMqttBroker, '', myMqttPort);
 var pongCount = 0; // Pong counter
-
-
-
 
 class SmartMqttPage extends StatefulWidget {
   const SmartMqttPage({Key? key}) : super(key: key);
@@ -20,7 +17,6 @@ class SmartMqttPage extends StatefulWidget {
 }
 
 class _SmartMqttPageState extends State<SmartMqttPage> {
-
   // String broker           = myMqttBroker;
   // int port                = myMqttPort;
   // String username         = myMqttUsername;
@@ -34,17 +30,26 @@ class _SmartMqttPageState extends State<SmartMqttPage> {
   // 定义ValueNotifier<int> 对象 _counter
   final ValueNotifier<String> _msg = ValueNotifier<String>('unknown Message');
   final ValueNotifier<String> _msg2 = ValueNotifier<String>('unknown Topic');
-
+  // ValueNotifier<String> _ch1 = ValueNotifier<String>('0');
+  // ValueNotifier<String> _ch2 = ValueNotifier<String>('0');
+  // ValueNotifier<String> _ch3 = ValueNotifier<String>('0');
+  int _ch1 = 0;
+  int _ch2 = 0;
+  int _ch3 = 0;
 
   Future<int> connect() async {
     /// Set logging on if needed, defaults to off
     client.logging(on: true);
+
     /// Set the correct MQTT protocol for mosquito
     client.setProtocolV311();
+
     /// If you intend to use a keep alive you must set it here otherwise keep alive will be disabled.
     client.keepAlivePeriod = 20;
+
     /// Add the unsolicited disconnection callback
     client.onDisconnected = onDisconnected;
+
     /// Add the successful connection callback
     client.onConnected = onConnected;
 
@@ -59,17 +64,16 @@ class _SmartMqttPageState extends State<SmartMqttPage> {
     /// from the broker.
     client.pongCallback = pong;
 
-
     final connMess = MqttConnectMessage()
-    .authenticateAs(myMqttUsername, myMqttPassword)
+        .authenticateAs(myMqttUsername, myMqttPassword)
         .withClientIdentifier('Mqtt_MyClientUniqueId')
-        .withWillTopic('willtopic') // If you set this you must set a will message
+        .withWillTopic(
+            'willtopic') // If you set this you must set a will message
         .withWillMessage('My Will message')
         .startClean() // Non persistent session for testing
         .withWillQos(MqttQos.atLeastOnce);
     print('EXAMPLE::Mosquitto client connecting....');
     client.connectionMessage = connMess;
-
 
     /// Connect the client, any errors here are communicated by raising of the appropriate exception. Note
     /// in some circumstances the broker will just disconnect us, see the spec about this, we however will
@@ -103,7 +107,6 @@ class _SmartMqttPageState extends State<SmartMqttPage> {
     const topic1 = 'student/CASA0022/ucfnmz0/chair1'; // Not a wildcard topic
     const topic2 = 'student/CASA0022/ucfnmz0/chair2'; // Not a wildcard topic
 
-
     client.subscribe(topic1, MqttQos.atMostOnce);
     client.subscribe(topic2, MqttQos.atMostOnce);
 
@@ -112,9 +115,35 @@ class _SmartMqttPageState extends State<SmartMqttPage> {
     client.updates!.listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
       final recMess = c![0].payload as MqttPublishMessage;
       final pt =
-      MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
-_msg2.value = c![0].topic;
-_msg.value = pt;
+          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+      _msg2.value = c[0].topic;
+      _msg.value = pt;
+
+      switch (pt) {
+        case 'CH1on':
+          _ch1 = 1;
+          print('_ch1 = 1');
+          break;
+        case 'CH1off':
+          _ch1 = 0;
+          print('_ch1 = 0');
+          break;
+        case 'CH2on':
+          _ch2 = 1;
+          break;
+        case 'CH2off':
+          _ch2 = 0;
+          break;
+        case 'CH3on':
+          _ch3 = 1;
+          break;
+        case 'CH3off':
+          _ch3 = 0;
+          break;
+        default:
+          break;
+      }
+
       /// The above may seem a little convoluted for users only interested in the
       /// payload, some users however may be interested in the received publish message,
       /// lets not constrain ourselves yet until the package has been in the wild
@@ -213,13 +242,30 @@ _msg.value = pt;
 
           ValueListenableBuilder<String>(
             builder: (context, value, child) {
-              return Text(value);
+              // return Text(value);
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(value),
+                  _ch1 == 1 ? Icon(Icons.chair_rounded) : Icon(Icons.chair_outlined),
+                  _ch2 == 1 ? Icon(Icons.chair_rounded) : Icon(Icons.chair_outlined),
+                  _ch3 == 1 ? Icon(Icons.chair_rounded) : Icon(Icons.chair_outlined),
+
+                ],
+              );
             },
             valueListenable: _msg,
           ),
           ValueListenableBuilder<String>(
             builder: (context, value, child) {
               return Text(value);
+
+              // imageData.receiptStatus == true
+              //     ? SizedBox(
+              //     height: 100,
+              //     width: 300,
+              //     child: Image.file(File(imageData.imagePath)))
+              //     : const Text("Click to add a receipt"),
             },
             valueListenable: _msg2,
           ),
@@ -239,16 +285,12 @@ _msg.value = pt;
     );
   }
 
-
-
-
   @override
   void dispose() {
     _msg.dispose();
     _msg2.dispose();
     super.dispose();
   }
-
 }
 
 class WidgetA extends StatelessWidget {

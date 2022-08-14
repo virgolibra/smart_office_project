@@ -27,7 +27,8 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Smart Office'),
+        title: const Text('Smart Office', style: TextStyle(color: Color(0xffffffff)),),
+        backgroundColor: Color(0xff242f35),
       ),
       body: ListView(
         children: <Widget>[
@@ -40,7 +41,7 @@ class LoginPage extends StatelessWidget {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-                color: const Color(0xffE09E45),
+                color: const Color(0xffc0c8cd),
                 borderRadius: BorderRadius.circular(18)),
             child: Consumer<ApplicationState>(
               builder: (context, appState, _) => Authentication(

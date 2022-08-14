@@ -6,19 +6,19 @@ class CustomTheme {
     return ThemeData(
         brightness: Brightness.light,
         visualDensity: const VisualDensity(vertical: 0.5, horizontal: 0.5),
-        primaryColor: const Color(0xffEDD5B3),
+        primaryColor: const Color(0xffffffff),
         primaryColorBrightness: Brightness.light,
         primaryColorLight: const Color(0x1aF5E0C3),
         primaryColorDark: const Color(0xff936F3E),
         canvasColor: const Color(0xffE09E45),
-        scaffoldBackgroundColor: const Color(0xffF5E0C3),
+        scaffoldBackgroundColor: const Color(0xffffffff),
         bottomAppBarColor: const Color(0xff6D42CE),
         cardColor: const Color(0xaaF5E0C3),
         dividerColor: const Color(0x1f6D42CE),
         focusColor: const Color(0x1aF5E0C3),
         colorScheme: ColorScheme.fromSwatch(
             primarySwatch: const MaterialColor(
-          0xFFF5E0C3,
+          0xFFFFFFFF,
           <int, Color>{
             50: Color(0x1aF5E0C3),
             100: Color(0xa1F5E0C3),

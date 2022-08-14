@@ -170,15 +170,21 @@ class IconAndDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            Icon(icon),
-            const SizedBox(width: 10),
-            Text(
-              detail,
-              style: const TextStyle(fontSize: 18),
-            )
-          ],
+        child: Container(
+          padding: const EdgeInsets.all(8.0),
+          decoration: BoxDecoration(
+              color: const Color(0xffe5e5e5),
+              borderRadius: BorderRadius.circular(10)),
+          child: Row(
+            children: [
+              Icon(icon),
+              const SizedBox(width: 10),
+              Text(
+                detail,
+                style: const TextStyle(fontSize: 18),
+              )
+            ],
+          ),
         ),
       );
 }
@@ -235,9 +241,9 @@ class StyledIconButton2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) => OutlinedButton.icon(
         style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: Color(0xff6D42CE)),
-          backgroundColor: const Color(0xff6D42CE),
-          textStyle: const TextStyle(fontSize: 15),
+          side: const BorderSide(color: Color(0xff354856)),
+          backgroundColor: const Color(0xff354856),
+          textStyle: const TextStyle(fontSize: 15, color: Color(0xffffffff)),
         ),
         onPressed: onPressed,
         icon: icon,
