@@ -33,6 +33,7 @@ class _SmartMqttPageState extends State<SmartMqttPage> {
 
   // 定义ValueNotifier<int> 对象 _counter
   final ValueNotifier<String> _msg = ValueNotifier<String>('unknown Message');
+  final ValueNotifier<String> _msg2 = ValueNotifier<String>('unknown Topic');
 
 
   Future<int> connect() async {
@@ -98,8 +99,13 @@ class _SmartMqttPageState extends State<SmartMqttPage> {
 
     /// Ok, lets try a subscription
     print('EXAMPLE::Subscribing to the student/CASA0022/ucfnmz0/IR topic');
-    const topic = 'student/CASA0022/ucfnmz0/IR'; // Not a wildcard topic
-    client.subscribe(topic, MqttQos.atMostOnce);
+    // const topic1 = 'student/CASA0022/ucfnmz0/nano33/pressure'; // Not a wildcard topic
+    const topic1 = 'student/CASA0022/ucfnmz0/chair1'; // Not a wildcard topic
+    const topic2 = 'student/CASA0022/ucfnmz0/chair2'; // Not a wildcard topic
+
+
+    client.subscribe(topic1, MqttQos.atMostOnce);
+    client.subscribe(topic2, MqttQos.atMostOnce);
 
     /// The client has a change notifier object(see the Observable class) which we then listen to to get
     /// notifications of published updates to each subscribed topic.
@@ -107,7 +113,7 @@ class _SmartMqttPageState extends State<SmartMqttPage> {
       final recMess = c![0].payload as MqttPublishMessage;
       final pt =
       MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
-
+_msg2.value = c![0].topic;
 _msg.value = pt;
       /// The above may seem a little convoluted for users only interested in the
       /// payload, some users however may be interested in the received publish message,
@@ -149,7 +155,8 @@ _msg.value = pt;
 
     /// Finally, unsubscribe and exit gracefully
     print('EXAMPLE::Unsubscribing');
-    client.unsubscribe(topic);
+    client.unsubscribe(topic1);
+    client.unsubscribe(topic2);
 
     /// Wait for the unsubscribe message from the broker if you wish.
     await MqttUtilities.asyncSleep(2);
@@ -210,6 +217,12 @@ _msg.value = pt;
             },
             valueListenable: _msg,
           ),
+          ValueListenableBuilder<String>(
+            builder: (context, value, child) {
+              return Text(value);
+            },
+            valueListenable: _msg2,
+          ),
           ElevatedButton(
             child: Text(myMqttBroker),
             onPressed: () {
@@ -232,6 +245,7 @@ _msg.value = pt;
   @override
   void dispose() {
     _msg.dispose();
+    _msg2.dispose();
     super.dispose();
   }
 
