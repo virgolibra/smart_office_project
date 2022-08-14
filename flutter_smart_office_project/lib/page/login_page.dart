@@ -32,7 +32,7 @@ class LoginPage extends StatelessWidget {
       ),
       body: ListView(
         children: <Widget>[
-          Image.asset('assets/title.png'),
+          Image.asset('assets/title1.png'),
           const SizedBox(height: 8),
           const IconAndDetail(Icons.account_balance_rounded, 'Login Page'),
           const SizedBox(
@@ -41,7 +41,7 @@ class LoginPage extends StatelessWidget {
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 10),
             decoration: BoxDecoration(
-                color: const Color(0xffc0c8cd),
+                color: const Color(0xffe5e5e5),
                 borderRadius: BorderRadius.circular(18)),
             child: Consumer<ApplicationState>(
               builder: (context, appState, _) => Authentication(
@@ -850,7 +850,7 @@ class _StartHomeState extends State<StartHome> {
           child: SizedBox(
             width: 200,
             height: 100,
-            child: StyledIconButton2(
+            child: StyledIconButton4(
               label: const Text(
                 'Main Page',
                 style: TextStyle(fontSize: 22),

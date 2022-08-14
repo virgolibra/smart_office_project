@@ -164,7 +164,7 @@ class Authentication extends StatelessWidget {
                     '$email',
                     style: const TextStyle(
                       fontSize: 20,
-                      color: Color(0xff6D42CE),
+                      color: Color(0xffE09E45),
                     ),
                   ),
                 ],
@@ -268,7 +268,7 @@ class _EmailFormState extends State<EmailForm> {
                       labelText: 'Email',
                       labelStyle: TextStyle(fontSize: 20),
                       floatingLabelStyle:
-                          TextStyle(color: Color(0xff936F3E), fontSize: 20),
+                          TextStyle(color: Color(0xff354856), fontSize: 20),
                       hintText: 'Enter your email',
                     ),
                     validator: (value) {
@@ -390,7 +390,7 @@ class _RegisterFormState extends State<RegisterForm> {
                         icon: Icon(
                           // Based on passwordVisible state choose the icon
                           _pwdVisible ? Icons.visibility : Icons.visibility_off,
-                          color: Color(0xffF5E0C3),
+                          color: Color(0xff354856),
                         ),
                         onPressed: () {
                           // Update the state i.e. toogle the state of passwordVisible variable
@@ -505,7 +505,7 @@ class _PasswordFormState extends State<PasswordForm> {
                         icon: Icon(
                           // Based on passwordVisible state choose the icon
                           _pwdVisible ? Icons.visibility : Icons.visibility_off,
-                          color: Color(0xffF5E0C3),
+                          color: Color(0xff354856),
                         ),
                         onPressed: () {
                           // Update the state i.e. toogle the state of passwordVisible variable

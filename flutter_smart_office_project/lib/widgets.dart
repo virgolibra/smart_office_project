@@ -197,8 +197,8 @@ class StyledButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => OutlinedButton(
         style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: Color(0xff6D42CE)),
-          backgroundColor: const Color(0xff6D42CE),
+          side: const BorderSide(color: Color(0xffE09E45)),
+          backgroundColor: const Color(0xffE09E45),
           textStyle: const TextStyle(fontSize: 15),
         ),
         onPressed: onPressed,
@@ -217,10 +217,10 @@ class StyledIconButton extends StatelessWidget {
   Widget build(BuildContext context) => OutlinedButton.icon(
         style: OutlinedButton.styleFrom(
           side: const BorderSide(
-            color: Color(0xffE09E45),
+            color: Color(0xff354856),
             width: 2,
           ),
-          backgroundColor: const Color(0xffE09E45),
+          backgroundColor: const Color(0xff354856),
           textStyle: const TextStyle(
             fontSize: 15,
           ),
@@ -241,8 +241,8 @@ class StyledIconButton2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) => OutlinedButton.icon(
         style: OutlinedButton.styleFrom(
-          side: const BorderSide(color: Color(0xff354856)),
-          backgroundColor: const Color(0xff354856),
+          side: const BorderSide(color: Color(0xffE09E45)),
+          backgroundColor: const Color(0xffE09E45),
           textStyle: const TextStyle(fontSize: 15, color: Color(0xffffffff)),
         ),
         onPressed: onPressed,
@@ -269,4 +269,24 @@ class StyledIconButton3 extends StatelessWidget {
         icon: icon,
         label: label,
       );
+}
+
+class StyledIconButton4 extends StatelessWidget {
+  const StyledIconButton4(
+      {required this.icon, required this.label, required this.onPressed});
+  final Widget icon;
+  final Widget label;
+  final void Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) => OutlinedButton.icon(
+    style: OutlinedButton.styleFrom(
+      side: const BorderSide(color: Color(0xff354856)),
+      backgroundColor: const Color(0xff354856),
+      textStyle: const TextStyle(fontSize: 15, color: Color(0xffffffff)),
+    ),
+    onPressed: onPressed,
+    icon: icon,
+    label: label,
+  );
 }

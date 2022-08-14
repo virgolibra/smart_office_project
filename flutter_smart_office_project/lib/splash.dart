@@ -31,7 +31,7 @@ class _SplashState extends State<Splash> {
               height: 30,
               width: 250,
               decoration: BoxDecoration(
-                  color: const Color(0xffC9A87C),
+                  color: const Color(0xffffffff),
                   borderRadius: BorderRadius.circular(10)),
 
             ),
