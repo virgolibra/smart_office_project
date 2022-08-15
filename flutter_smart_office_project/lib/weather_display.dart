@@ -99,7 +99,7 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
         width: MediaQuery.of(context).size.width * 0.9,
         height: MediaQuery.of(context).size.height * 0.4,
         decoration: BoxDecoration(
-            color: const Color(0xffDEC29B),
+            color: const Color(0xff242f35),
             borderRadius: BorderRadius.circular(10)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -115,7 +115,7 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
                   'Weather',
                   style: TextStyle(
                       fontSize: 22,
-                      color: Colors.black87,
+                      color: Color(0xffffffff),
                       fontWeight: FontWeight.w700),
                 ),
                 Expanded(
@@ -126,7 +126,7 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
                         'based on current location',
                         style: TextStyle(
                           fontSize: 12,
-                          color: Colors.black87,
+                          color: Color(0xffffffff),
                         ),
                       ),
                     ],
@@ -139,7 +139,7 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
               thickness: 2,
               indent: 0,
               endIndent: 0,
-              color: Colors.black87,
+              color: Color(0xffffffff),
             ),
             Row(
               children: [
@@ -153,21 +153,21 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
                         '$_areaName',
                         style: const TextStyle(
                             fontSize: 22,
-                            color: Colors.black87,
+                            color: Color(0xffffffff),
                             fontWeight: FontWeight.w700),
                       ),
                       Text(
                         '${_temperature?.toStringAsFixed(0)}\u2103',
                         style: const TextStyle(
                             fontSize: 45,
-                            color: Colors.black87,
+                            color: Color(0xffffffff),
                             fontWeight: FontWeight.w300),
                       ),
                       Text(
                         '$_weatherDescription',
                         style: const TextStyle(
                             fontSize: 22,
-                            color: Colors.black87,
+                            color: Color(0xffffffff),
                             fontWeight: FontWeight.w300),
                       ),
                     ],
@@ -183,52 +183,52 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
                   SizedBox(
                     height: 30,
                     child: ListTile(
-                      leading: const Icon(Icons.device_thermostat_rounded),
+                      leading: const Icon(Icons.device_thermostat_rounded, color: Color(0xffffffff),),
                       minLeadingWidth: 2,
-                      title: const Text('Temperature'),
+                      title: const Text('Temperature', style: TextStyle(color: Color(0xffffffff)),),
                       selected: false,
                       trailing: Text(
                         '${_tempMin?.toStringAsFixed(0)}\u2103 - ${_tempMax?.toStringAsFixed(0)}\u2103',
-                        style: const TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18, color: Color(0xffffffff)),
                       ),
                     ),
                   ),
                   SizedBox(
                     height: 30,
                     child: ListTile(
-                      leading: const Icon(Icons.back_hand_rounded),
+                      leading: const Icon(Icons.back_hand_rounded, color: Color(0xffffffff),),
                       minLeadingWidth: 2,
-                      title: const Text('Feels Like'),
+                      title: const Text('Feels Like', style: TextStyle(color: Color(0xffffffff)),),
                       selected: false,
                       trailing: Text(
                         '${_tempFeelsLike?.toStringAsFixed(0)}\u2103',
-                        style: const TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18, color: Color(0xffffffff)),
                       ),
                     ),
                   ),
                   SizedBox(
                     height: 30,
                     child: ListTile(
-                      leading: const Icon(Icons.water_drop_rounded),
+                      leading: const Icon(Icons.water_drop_rounded, color: Color(0xffffffff),),
                       minLeadingWidth: 2,
-                      title: const Text('Humidity'),
+                      title: const Text('Humidity', style: TextStyle(color: Color(0xffffffff)),),
                       selected: false,
                       trailing: Text(
                         '$_humidity%',
-                        style: const TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18, color: Color(0xffffffff)),
                       ),
                     ),
                   ),
                   SizedBox(
                     height: 30,
                     child: ListTile(
-                      leading: const Icon(Icons.cloud_circle_rounded),
+                      leading: const Icon(Icons.cloud_circle_rounded, color: Color(0xffffffff),),
                       minLeadingWidth: 2,
-                      title: const Text('Pressure'),
+                      title: const Text('Pressure', style: TextStyle(color: Color(0xffffffff)),),
                       selected: false,
                       trailing: Text(
                         '$_pressure hPa',
-                        style: const TextStyle(fontSize: 18),
+                        style: const TextStyle(fontSize: 18, color: Color(0xffffffff)),
                       ),
                     ),
                   ),
@@ -251,7 +251,7 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
         width: MediaQuery.of(context).size.width * 0.9,
         height: MediaQuery.of(context).size.height * 0.4,
         decoration: BoxDecoration(
-            color: const Color(0xffDEC29B),
+            color: const Color(0xff242f35),
             borderRadius: BorderRadius.circular(10)),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -264,7 +264,7 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
               'Weather',
               style: TextStyle(
                   fontSize: 22,
-                  color: Colors.black87,
+                  color: Color(0xffffffff),
                   fontWeight: FontWeight.w700),
             ),
             const Divider(
@@ -272,7 +272,7 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
               thickness: 2,
               indent: 0,
               endIndent: 0,
-              color: Colors.black87,
+              color: Color(0xffffffff),
             ),
             Column(
               children: [
@@ -281,7 +281,7 @@ class _WeatherDisplayState extends State<WeatherDisplay> {
                 ),
                 const Text(
                   'Fetching Weather...',
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20, color: Color(0xffffffff)),
                 ),
                 Container(
                     margin: const EdgeInsets.only(top: 50),

@@ -51,9 +51,11 @@ class _SmartBasePage extends State<SmartBasePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffF5E0C3),
+      backgroundColor: Color(0xffffffff),
       appBar: AppBar(
-        title: const Text('Smart Office'),
+        title: const Text('Smart Office', style: TextStyle(color: Color(0xffffffff)),),
+        backgroundColor: Color(0xff242f35),
+        foregroundColor: Color(0xffffffff),
       ),
       drawer: DrawerPage(
         email: widget.email!,
@@ -75,7 +77,7 @@ class _SmartBasePage extends State<SmartBasePage> {
         },
       ),
       bottomNavigationBar: BottomBar(
-        backgroundColor: const Color(0xffE09E45),
+        backgroundColor: const Color(0xff242f35),
 
         selectedIndex: _currentPage,
         onTap: (int index) {
@@ -86,22 +88,26 @@ class _SmartBasePage extends State<SmartBasePage> {
           BottomBarItem(
             icon: Icon(Icons.home),
             title: Text('Home'),
-            activeColor: Color(0xffF5E0C3),
+            activeColor: Color(0xffffffff),
+            inactiveColor: Color(0xffffffff),
           ),
           BottomBarItem(
             icon: Icon(Icons.add_box_rounded),
             title: Text('Add Item'),
-            activeColor: Color(0xffF5E0C3),
+            activeColor: Color(0xffffffff),
+            inactiveColor: Color(0xffffffff),
           ),
           BottomBarItem(
             icon: Icon(Icons.receipt_long_rounded),
             title: Text('Transaction'),
-            activeColor: Color(0xffF5E0C3),
+            activeColor: Color(0xffffffff),
+            inactiveColor: Color(0xffffffff),
           ),
           BottomBarItem(
             icon: Icon(Icons.settings),
             title: Text('Settings'),
-            activeColor: Color(0xffF5E0C3),
+            activeColor: Color(0xffffffff),
+            inactiveColor: Color(0xffffffff),
 
           ),
         ],

@@ -20,7 +20,8 @@ class DrawerPage extends StatelessWidget {
         children: [
           DrawerHeader(
             decoration: const BoxDecoration(
-              color: Colors.white70,
+              // color: Colors.white70,
+              color: Color(0xff242f35),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,13 +29,14 @@ class DrawerPage extends StatelessWidget {
                 Icon(
                   Icons.account_circle_rounded,
                   size: 80,
+                  color: Color(0xffffffff),
                 ),
                 SizedBox(
                   height: 10,
                 ),
                 Text(
                   email,
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 16, color: Color(0xffffffff)),
                 ),
               ],
             ),
