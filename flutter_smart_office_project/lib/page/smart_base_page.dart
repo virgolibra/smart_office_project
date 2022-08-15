@@ -78,7 +78,6 @@ class _SmartBasePage extends State<SmartBasePage> {
       ),
       bottomNavigationBar: BottomBar(
         backgroundColor: const Color(0xff242f35),
-
         selectedIndex: _currentPage,
         onTap: (int index) {
           _pageController.jumpToPage(index);

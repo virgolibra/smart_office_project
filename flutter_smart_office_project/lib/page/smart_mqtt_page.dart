@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_office_project/chair_display.dart';
 
 import 'dart:async';
 import 'package:flutter_smart_office_project/secrets.dart';
@@ -237,6 +238,7 @@ class _SmartMqttPageState extends State<SmartMqttPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          ChairDisplay(),
           const WidgetA(),
           Text('MQTT TEST'),
 
@@ -280,6 +282,9 @@ class _SmartMqttPageState extends State<SmartMqttPage> {
               connect();
             },
           ),
+
+          Text('-----------'),
+
         ],
       ),
     );

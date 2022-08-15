@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_office_project/Indoor_display.dart';
 
 import '../weather_display.dart';
 import '../widgets.dart';
@@ -36,11 +37,12 @@ class _SmartHomePageState extends State<SmartHomePage> {
                 lat: widget.lat,
                 lon: widget.lon,
               ),
+              IndoorDisplay(),
             ],
           ),
         ),
 
-        Image.asset('assets/click_to_add.png'),
+        // Image.asset('assets/click_to_add.png'),
       ],
     );
   }
