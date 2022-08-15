@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_office_project/page/chair_detail_page.dart';
 
 import 'dart:async';
 import 'package:flutter_smart_office_project/secrets.dart';
@@ -635,74 +636,66 @@ class _ChairDisplayState extends State<ChairDisplay> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      IconButton(
-                        icon: _ch1 == 'on'
-                            ? Icon(Icons.chair_rounded,
-                                color: Color(0xffE09E45), size: 80)
-                            : Icon(Icons.chair_outlined,
-                                color: Color(0xff496571), size: 80),
-                        tooltip: 'Chair 01 detail info',
-                        onPressed: () {
-                          setState(() {});
-                        },
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Text('01')
-                    ],
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                      iconSize: 70,
+                      icon: _ch1 == 'on'
+                          ? Icon(Icons.chair_rounded,
+                              color: Color(0xffE09E45))
+                          : Icon(Icons.chair_outlined,
+                              color: Color(0xff496571)),
+                      tooltip: 'Chair 01 detail info',
+                      onPressed: () {
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  ChairDetailPage(id: '01',),
+                            ),
+                          );
+                        });
+                      },
+                    ),
+                    Text('01')
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      IconButton(
-                        icon: _ch2 == 'on'
-                            ? Icon(Icons.chair_rounded,
-                                color: Color(0xffE09E45), size: 80)
-                            : Icon(Icons.chair_outlined,
-                                color: Color(0xff496571), size: 80),
-                        tooltip: 'Chair 02 detail info',
-                        onPressed: () {
-                          setState(() {});
-                        },
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Text('02')
-                    ],
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                      iconSize: 70,
+                      icon: _ch2 == 'on'
+                          ? Icon(Icons.chair_rounded,
+                              color: Color(0xffE09E45))
+                          : Icon(Icons.chair_outlined,
+                              color: Color(0xff496571)),
+                      tooltip: 'Chair 02 detail info',
+                      onPressed: () {
+                        setState(() {});
+                      },
+                    ),
+                    Text('02')
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      IconButton(
-                        icon: _ch3 == 'on'
-                            ? Icon(Icons.chair_rounded,
-                                color: Color(0xffE09E45), size: 80)
-                            : Icon(Icons.chair_outlined,
-                                color: Color(0xff496571), size: 80),
-                        tooltip: 'Chair 03 detail info',
-                        onPressed: () {
-                          setState(() {});
-                        },
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Text('03')
-                    ],
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                      iconSize: 70,
+                      icon: _ch3 == 'on'
+                          ? Icon(Icons.chair_rounded,
+                              color: Color(0xffE09E45))
+                          : Icon(Icons.chair_outlined,
+                              color: Color(0xff496571)),
+                      tooltip: 'Chair 03 detail info',
+                      onPressed: () {
+                        setState(() {});
+                      },
+                    ),
+                    Text('03')
+                  ],
                 ),
               ],
             ),
@@ -710,65 +703,50 @@ class _ChairDisplayState extends State<ChairDisplay> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.chair_outlined,
-                            color: Color(0xff496571), size: 80),
-                        tooltip: 'Chair 04 detail info',
-                        onPressed: () {
-                          setState(() {});
-                        },
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Text('04')
-                    ],
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                      iconSize: 70,
+                      icon: Icon(Icons.chair_outlined,
+                          color: Color(0xff496571)),
+                      tooltip: 'Chair 04 detail info',
+                      onPressed: () {
+                        setState(() {});
+                      },
+                    ),
+                    Text('04')
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.chair_outlined,
-                            color: Color(0xff496571), size: 80),
-                        tooltip: 'Chair 05 detail info',
-                        onPressed: () {
-                          setState(() {});
-                        },
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Text('05')
-                    ],
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                      iconSize: 70,
+                      icon: Icon(Icons.chair_outlined,
+                          color: Color(0xff496571)),
+                      tooltip: 'Chair 05 detail info',
+                      onPressed: () {
+                        setState(() {});
+                      },
+                    ),
+                    Text('05')
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.chair_outlined,
-                            color: Color(0xff496571), size: 80),
-                        tooltip: 'Chair 06 detail info',
-                        onPressed: () {
-                          setState(() {});
-                        },
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Text('06')
-                    ],
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                      iconSize: 70,
+                      icon: Icon(Icons.chair_outlined,
+                          color: Color(0xff496571)),
+                      tooltip: 'Chair 06 detail info',
+                      onPressed: () {
+                        setState(() {});
+                      },
+                    ),
+                    Text('06')
+                  ],
                 ),
               ],
             ),
@@ -776,65 +754,50 @@ class _ChairDisplayState extends State<ChairDisplay> {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.chair_outlined,
-                            color: Color(0xff496571), size: 80),
-                        tooltip: 'Chair 07 detail info',
-                        onPressed: () {
-                          setState(() {});
-                        },
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Text('07')
-                    ],
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                      iconSize: 70,
+                      icon: Icon(Icons.chair_outlined,
+                          color: Color(0xff496571)),
+                      tooltip: 'Chair 07 detail info',
+                      onPressed: () {
+                        setState(() {});
+                      },
+                    ),
+                    Text('07')
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.chair_outlined,
-                            color: Color(0xff496571), size: 80),
-                        tooltip: 'Chair 08 detail info',
-                        onPressed: () {
-                          setState(() {});
-                        },
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Text('08')
-                    ],
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                      iconSize: 70,
+                      icon: Icon(Icons.chair_outlined,
+                          color: Color(0xff496571)),
+                      tooltip: 'Chair 08 detail info',
+                      onPressed: () {
+                        setState(() {});
+                      },
+                    ),
+                    Text('08')
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.chair_outlined,
-                            color: Color(0xff496571), size: 80),
-                        tooltip: 'Chair 09 detail info',
-                        onPressed: () {
-                          setState(() {});
-                        },
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Text('09')
-                    ],
-                  ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    IconButton(
+                      iconSize: 70,
+                      icon: Icon(Icons.chair_outlined,
+                          color: Color(0xff496571)),
+                      tooltip: 'Chair 09 detail info',
+                      onPressed: () {
+                        setState(() {});
+                      },
+                    ),
+                    Text('09')
+                  ],
                 ),
               ],
             ),
@@ -909,6 +872,10 @@ class _ChairDisplayState extends State<ChairDisplay> {
                 // ),
               ],
             ),
+            const SizedBox(
+              height: 10,
+            ),
+            Text("Press icon to see the detail", style: TextStyle(fontSize: 15),),
             const SizedBox(
               height: 20,
             ),

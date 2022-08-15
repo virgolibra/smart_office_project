@@ -23,9 +23,10 @@ class _IndoorDisplayState extends State<IndoorDisplay> {
   AppState _state = AppState.NOT_DOWNLOADED;
   final ValueNotifier<String> _msg = ValueNotifier<String>('unknown Message');
   final ValueNotifier<String> _tpc = ValueNotifier<String>('unknown Topic');
-  late double _temperature;
-  late double _pressure;
-  late double _altitude;
+  double _temperature = 0.0;
+  double _pressure = 0.0;
+  double _altitude = 0.0;
+  bool isDataCollected = false;
 
   @override
   void initState() {
@@ -111,12 +112,15 @@ class _IndoorDisplayState extends State<IndoorDisplay> {
       switch (_tpc.value) {
         case topic1:
           _temperature = double.parse(_msg.value);
+          isDataCollected = true;
           break;
         case topic2:
           _pressure = double.parse(_msg.value);
+          isDataCollected = true;
           break;
         case topic3:
           _altitude = double.parse(_msg.value);
+          isDataCollected = true;
           break;
         default:
           break;
@@ -389,10 +393,14 @@ class _IndoorDisplayState extends State<IndoorDisplay> {
                       ),
                     ),
                   ),
+                  SizedBox(
+                    height: 20,
+                  ),
 
                 ],
               ),
             ),
+            Text(isDataCollected ? "Iscollected" :"No Mqtt Please Check", style: TextStyle(color: Color(0xffffffff)),),
 
             // Expanded(child: _weatherIconDisplay()),
           ],
