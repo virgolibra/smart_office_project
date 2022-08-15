@@ -290,3 +290,24 @@ class StyledIconButton4 extends StatelessWidget {
     label: label,
   );
 }
+
+class StyledIconButton5 extends StatelessWidget {
+  const StyledIconButton5(
+      {required this.icon, required this.label, required this.onPressed});
+  final Widget icon;
+  final Widget label;
+  final void Function() onPressed;
+
+  @override
+  Widget build(BuildContext context) => OutlinedButton.icon(
+    style: OutlinedButton.styleFrom(
+      side: const BorderSide(color: Color(0xffE09E45)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
+      backgroundColor: const Color(0xffE09E45),
+      textStyle: const TextStyle(fontSize: 15, color: Color(0xffffffff)),
+    ),
+    onPressed: onPressed,
+    icon: icon,
+    label: label,
+  );
+}

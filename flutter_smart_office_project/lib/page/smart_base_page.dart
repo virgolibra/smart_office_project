@@ -91,8 +91,8 @@ class _SmartBasePage extends State<SmartBasePage> {
             inactiveColor: Color(0xffffffff),
           ),
           BottomBarItem(
-            icon: Icon(Icons.add_box_rounded),
-            title: Text('Add Item'),
+            icon: Icon(Icons.chair_rounded),
+            title: Text('Chair'),
             activeColor: Color(0xffffffff),
             inactiveColor: Color(0xffffffff),
           ),
