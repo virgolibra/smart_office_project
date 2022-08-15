@@ -92,7 +92,7 @@ class _SmartBasePage extends State<SmartBasePage> {
           ),
           BottomBarItem(
             icon: Icon(Icons.chair_rounded),
-            title: Text('Chair'),
+            title: Text('Seat'),
             activeColor: Color(0xffffffff),
             inactiveColor: Color(0xffffffff),
           ),

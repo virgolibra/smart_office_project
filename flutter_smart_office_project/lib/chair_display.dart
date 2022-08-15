@@ -8,6 +8,7 @@ import 'package:flutter_smart_office_project/widgets.dart';
 import 'dart:io';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
+import 'package:intl/intl.dart';
 
 enum AppState { NOT_DOWNLOADED, DOWNLOADING, FINISHED_DOWNLOADING }
 final client = MqttServerClient.withPort(myMqttBroker, '', myMqttPort);
@@ -27,6 +28,8 @@ class _ChairDisplayState extends State<ChairDisplay> {
   String _ch1 = 'off';
   String _ch2 = 'off';
   String _ch3 = 'off';
+  bool isDataCollected = false;
+  String formattedTime = DateFormat("HH:mm:ss").format(DateTime.now());
 
   @override
   void initState() {
@@ -109,12 +112,15 @@ class _ChairDisplayState extends State<ChairDisplay> {
       switch (_tpc.value) {
         case topic1:
           _ch1 = _msg.value;
+          isDataCollected = true;
           break;
         case topic2:
           _ch2 = _msg.value;
+          isDataCollected = true;
           break;
         case topic3:
           _ch3 = _msg.value;
+          isDataCollected = true;
           break;
         default:
           break;
@@ -171,6 +177,7 @@ class _ChairDisplayState extends State<ChairDisplay> {
 
     setState(() {
       _state = AppState.FINISHED_DOWNLOADING;
+      formattedTime = DateFormat("HH:mm:ss").format(DateTime.now());
     });
     return 0;
   }
@@ -278,7 +285,6 @@ class _ChairDisplayState extends State<ChairDisplay> {
             const SizedBox(
               height: 20,
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -287,7 +293,7 @@ class _ChairDisplayState extends State<ChairDisplay> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const <Widget>[
-                    Icon(Icons.chair_outlined,
+                      Icon(Icons.chair_outlined,
                           color: Color(0xff496571), size: 80),
                       SizedBox(
                         height: 15,
@@ -317,7 +323,6 @@ class _ChairDisplayState extends State<ChairDisplay> {
                 ),
               ],
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -411,8 +416,14 @@ class _ChairDisplayState extends State<ChairDisplay> {
                     onPressed: () async {
                       connect();
                     },
-                    icon: const Text('Chair Status', style: TextStyle(fontWeight: FontWeight.bold),),
-                    label: Icon(Icons.search_rounded, size: 80,),
+                    icon: const Text(
+                      'Chair Status',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    label: Icon(
+                      Icons.search_rounded,
+                      size: 80,
+                    ),
                   ),
                 ],
               ),
@@ -482,6 +493,10 @@ class _ChairDisplayState extends State<ChairDisplay> {
                 ),
                 const Text(
                   'Refreshing Chair Data...',
+                  style: TextStyle(fontSize: 20, color: Color(0xffffffff)),
+                ),
+                const Text(
+                  'Please do not leave this page.',
                   style: TextStyle(fontSize: 20, color: Color(0xffffffff)),
                 ),
                 Container(
@@ -642,8 +657,7 @@ class _ChairDisplayState extends State<ChairDisplay> {
                     IconButton(
                       iconSize: 70,
                       icon: _ch1 == 'on'
-                          ? Icon(Icons.chair_rounded,
-                              color: Color(0xffE09E45))
+                          ? Icon(Icons.chair_rounded, color: Color(0xffE09E45))
                           : Icon(Icons.chair_outlined,
                               color: Color(0xff496571)),
                       tooltip: 'Chair 01 detail info',
@@ -651,8 +665,9 @@ class _ChairDisplayState extends State<ChairDisplay> {
                         setState(() {
                           Navigator.of(context).push(
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  ChairDetailPage(id: '01',),
+                              builder: (context) => ChairDetailPage(
+                                id: '01',
+                              ),
                             ),
                           );
                         });
@@ -667,8 +682,7 @@ class _ChairDisplayState extends State<ChairDisplay> {
                     IconButton(
                       iconSize: 70,
                       icon: _ch2 == 'on'
-                          ? Icon(Icons.chair_rounded,
-                              color: Color(0xffE09E45))
+                          ? Icon(Icons.chair_rounded, color: Color(0xffE09E45))
                           : Icon(Icons.chair_outlined,
                               color: Color(0xff496571)),
                       tooltip: 'Chair 02 detail info',
@@ -685,8 +699,7 @@ class _ChairDisplayState extends State<ChairDisplay> {
                     IconButton(
                       iconSize: 70,
                       icon: _ch3 == 'on'
-                          ? Icon(Icons.chair_rounded,
-                              color: Color(0xffE09E45))
+                          ? Icon(Icons.chair_rounded, color: Color(0xffE09E45))
                           : Icon(Icons.chair_outlined,
                               color: Color(0xff496571)),
                       tooltip: 'Chair 03 detail info',
@@ -708,8 +721,8 @@ class _ChairDisplayState extends State<ChairDisplay> {
                   children: <Widget>[
                     IconButton(
                       iconSize: 70,
-                      icon: Icon(Icons.chair_outlined,
-                          color: Color(0xff496571)),
+                      icon:
+                          Icon(Icons.chair_outlined, color: Color(0xff496571)),
                       tooltip: 'Chair 04 detail info',
                       onPressed: () {
                         setState(() {});
@@ -723,8 +736,8 @@ class _ChairDisplayState extends State<ChairDisplay> {
                   children: <Widget>[
                     IconButton(
                       iconSize: 70,
-                      icon: Icon(Icons.chair_outlined,
-                          color: Color(0xff496571)),
+                      icon:
+                          Icon(Icons.chair_outlined, color: Color(0xff496571)),
                       tooltip: 'Chair 05 detail info',
                       onPressed: () {
                         setState(() {});
@@ -738,8 +751,8 @@ class _ChairDisplayState extends State<ChairDisplay> {
                   children: <Widget>[
                     IconButton(
                       iconSize: 70,
-                      icon: Icon(Icons.chair_outlined,
-                          color: Color(0xff496571)),
+                      icon:
+                          Icon(Icons.chair_outlined, color: Color(0xff496571)),
                       tooltip: 'Chair 06 detail info',
                       onPressed: () {
                         setState(() {});
@@ -759,8 +772,8 @@ class _ChairDisplayState extends State<ChairDisplay> {
                   children: <Widget>[
                     IconButton(
                       iconSize: 70,
-                      icon: Icon(Icons.chair_outlined,
-                          color: Color(0xff496571)),
+                      icon:
+                          Icon(Icons.chair_outlined, color: Color(0xff496571)),
                       tooltip: 'Chair 07 detail info',
                       onPressed: () {
                         setState(() {});
@@ -774,8 +787,8 @@ class _ChairDisplayState extends State<ChairDisplay> {
                   children: <Widget>[
                     IconButton(
                       iconSize: 70,
-                      icon: Icon(Icons.chair_outlined,
-                          color: Color(0xff496571)),
+                      icon:
+                          Icon(Icons.chair_outlined, color: Color(0xff496571)),
                       tooltip: 'Chair 08 detail info',
                       onPressed: () {
                         setState(() {});
@@ -789,8 +802,8 @@ class _ChairDisplayState extends State<ChairDisplay> {
                   children: <Widget>[
                     IconButton(
                       iconSize: 70,
-                      icon: Icon(Icons.chair_outlined,
-                          color: Color(0xff496571)),
+                      icon:
+                          Icon(Icons.chair_outlined, color: Color(0xff496571)),
                       tooltip: 'Chair 09 detail info',
                       onPressed: () {
                         setState(() {});
@@ -821,7 +834,7 @@ class _ChairDisplayState extends State<ChairDisplay> {
                         },
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 2,
                       ),
                       Text('Available')
                     ],
@@ -841,7 +854,7 @@ class _ChairDisplayState extends State<ChairDisplay> {
                         },
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 2,
                       ),
                       Text('Unavailable'),
                     ],
@@ -873,21 +886,38 @@ class _ChairDisplayState extends State<ChairDisplay> {
               ],
             ),
             const SizedBox(
-              height: 10,
+              height: 2,
             ),
-            Text("Press icon to see the detail", style: TextStyle(fontSize: 15),),
+            Text(
+              "Press icon to see the detail",
+              style: TextStyle(fontSize: 15),
+            ),
+            Text(
+              isDataCollected
+                  ? "Updated at $formattedTime "
+                  : "No valid MQTT data. Please check the device connection.",
+              style: TextStyle(color: Colors.black),
+            ),
             const SizedBox(
-              height: 20,
+              height: 10,
             ),
             StyledIconButton5(
               onPressed: () async {
                 connect();
                 _state = AppState.DOWNLOADING;
               },
-              icon: const Text('Refresh', style: TextStyle(color: Color(0xffffffff), fontSize: 20, fontWeight: FontWeight.bold),),
-              label: Icon(Icons.search_rounded, size: 60,),
+              icon: const Text(
+                'Refresh',
+                style: TextStyle(
+                    color: Color(0xffffffff),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold),
+              ),
+              label: Icon(
+                Icons.search_rounded,
+                size: 60,
+              ),
             ),
-
 
             // Expanded(child: _weatherIconDisplay()),
           ],

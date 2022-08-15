@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 
 import 'dart:async';
 import 'package:flutter_smart_office_project/secrets.dart';
+import 'package:flutter_smart_office_project/widgets.dart';
 import 'dart:io';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:mqtt_client/mqtt_server_client.dart';
+import 'package:intl/intl.dart';
 
 enum AppState {NOT_DOWNLOADED, DOWNLOADING, FINISHED_DOWNLOADING}
 final client = MqttServerClient.withPort(myMqttBroker, '', myMqttPort);
@@ -27,11 +29,13 @@ class _IndoorDisplayState extends State<IndoorDisplay> {
   double _pressure = 0.0;
   double _altitude = 0.0;
   bool isDataCollected = false;
+  String formattedTime = DateFormat("HH:mm:ss").format(DateTime.now());
+
 
   @override
   void initState() {
     super.initState();
-    connect();
+    // connect();
   }
 
   @override
@@ -42,7 +46,6 @@ class _IndoorDisplayState extends State<IndoorDisplay> {
 
 
   Future<int> connect() async {
-
 
     setState(() {
       _state = AppState.DOWNLOADING;
@@ -177,6 +180,8 @@ class _IndoorDisplayState extends State<IndoorDisplay> {
 
     setState(() {
       _state = AppState.FINISHED_DOWNLOADING;
+      formattedTime = DateFormat("HH:mm:ss").format(DateTime.now());
+
     });
     return 0;
   }
@@ -233,25 +238,12 @@ class _IndoorDisplayState extends State<IndoorDisplay> {
       : contentNotDownloaded();
 
   Widget contentNotDownloaded() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const <Widget>[
-          Text(
-            'Press the button to download the MQTT',
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget contentDownloading() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
         width: MediaQuery.of(context).size.width * 0.9,
-        height: MediaQuery.of(context).size.height * 0.3,
+        height: MediaQuery.of(context).size.height * 0.4,
         decoration: BoxDecoration(
             color: const Color(0xff242f35),
             borderRadius: BorderRadius.circular(10)),
@@ -279,10 +271,83 @@ class _IndoorDisplayState extends State<IndoorDisplay> {
             Column(
               children: [
                 const SizedBox(
-                  height: 50,
+                  height: 20,
+                ),
+                Center(
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        'Press the button to fetch indoor data',
+                        style: TextStyle(color: Color(0xffffffff)),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      StyledIconButton5(
+                        onPressed: () async {
+                          connect();
+                        },
+                        icon: const Text('Indoor Data', style: TextStyle(fontWeight: FontWeight.bold),),
+                        label: Icon(Icons.search_rounded, size: 80,),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+
+            // Expanded(child: _weatherIconDisplay()),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget contentDownloading() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
+        width: MediaQuery.of(context).size.width * 0.9,
+        height: MediaQuery.of(context).size.height * 0.4,
+        decoration: BoxDecoration(
+            color: const Color(0xff242f35),
+            borderRadius: BorderRadius.circular(10)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            const SizedBox(
+              height: 10,
+            ),
+            const Text(
+              'Indoor',
+              style: TextStyle(
+                  fontSize: 22,
+                  color: Color(0xffffffff),
+                  fontWeight: FontWeight.w700),
+            ),
+            const Divider(
+              height: 8,
+              thickness: 2,
+              indent: 0,
+              endIndent: 0,
+              color: Color(0xffffffff),
+            ),
+            Column(
+              children: [
+                const SizedBox(
+                  height: 20,
                 ),
                 const Text(
                   'Fetching Indoor Data...',
+                  style: TextStyle(fontSize: 20, color: Color(0xffffffff)),
+                ),
+                const Text(
+                  'Please do not leave this page.',
                   style: TextStyle(fontSize: 20, color: Color(0xffffffff)),
                 ),
                 Container(
@@ -305,7 +370,7 @@ class _IndoorDisplayState extends State<IndoorDisplay> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
         width: MediaQuery.of(context).size.width * 0.9,
-        height: MediaQuery.of(context).size.height * 0.3,
+        height: MediaQuery.of(context).size.height * 0.4,
         decoration: BoxDecoration(
             color: const Color(0xff242f35),
             borderRadius: BorderRadius.circular(10)),
@@ -400,9 +465,19 @@ class _IndoorDisplayState extends State<IndoorDisplay> {
                 ],
               ),
             ),
-            Text(isDataCollected ? "Iscollected" :"No Mqtt Please Check", style: TextStyle(color: Color(0xffffffff)),),
-
+            Text(isDataCollected ? "Updated at $formattedTime " :"No valid MQTT data. Please check the device connection.", style: TextStyle(color: Color(0xffffffff)),),
             // Expanded(child: _weatherIconDisplay()),
+            SizedBox(
+              height: 20,
+            ),
+            StyledIconButton5(
+              onPressed: () async {
+                connect();
+                _state = AppState.DOWNLOADING;
+              },
+              icon: const Text('Refresh', style: TextStyle(color: Color(0xffffffff), fontSize: 20, fontWeight: FontWeight.bold),),
+              label: Icon(Icons.search_rounded, size: 60,),
+            ),
           ],
         ),
       ),

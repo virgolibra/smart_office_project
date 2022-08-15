@@ -20,7 +20,7 @@ class _SmartHomePageState extends State<SmartHomePage> {
       children: <Widget>[
         // Image.asset('assets/image1.jpg'),
         const SizedBox(height: 8),
-        const IconAndDetail(Icons.home_rounded, 'Home Page'),
+        // const IconAndDetail(Icons.home_rounded, 'Home Page'),
         // const Divider(
         //   height: 8,
         //   thickness: 2,
