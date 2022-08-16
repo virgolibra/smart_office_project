@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_smart_office_project/page/smart_home_page.dart';
 import 'package:flutter_smart_office_project/page/smart_setting_page.dart';
 import 'package:flutter_smart_office_project/page/smart_mqtt_page.dart';
+import 'package:flutter_smart_office_project/page/smart_table_page.dart';
 import 'package:geolocator/geolocator.dart';
 import 'drawer_page.dart';
 import 'package:bottom_bar/bottom_bar.dart';
@@ -67,7 +68,7 @@ class _SmartBasePage extends State<SmartBasePage> {
           // Container(color: Colors.greenAccent.shade700),
           // Container(color: Colors.orange),
           SmartMqttPage(),
-          SmartHomePage(lat: autoLat!, lon: autoLon!,),
+          SmartTablePage(),
           SmartSettingPage(email: widget.email!),
         ],
         onPageChanged: (index) {
@@ -97,8 +98,8 @@ class _SmartBasePage extends State<SmartBasePage> {
             inactiveColor: Color(0xffffffff),
           ),
           BottomBarItem(
-            icon: Icon(Icons.receipt_long_rounded),
-            title: Text('Transaction'),
+            icon: Icon(Icons.table_restaurant_rounded),
+            title: Text('Table'),
             activeColor: Color(0xffffffff),
             inactiveColor: Color(0xffffffff),
           ),
