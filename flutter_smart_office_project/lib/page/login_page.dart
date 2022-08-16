@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 // import 'package:camera/camera.dart';
+import 'package:camera/camera.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 // import 'package:flutter_casa0015_mobile_app/formatter.dart';
 // import 'package:flutter_casa0015_mobile_app/page/add_receipt_page.dart';
+import 'package:flutter_smart_office_project/page/add_image_page.dart';
 import 'package:flutter_smart_office_project/page/smart_base_page.dart';
 import 'package:provider/provider.dart';
 
@@ -80,356 +82,374 @@ class SmartChairReportMessage {
   SmartChairReportMessage({
     required this.id,
     required this.name,
-    required this.price,
-    required this.item,
-    required this.category,
-    required this.iconIndex,
-    required this.lat,
-    required this.lon,
+    required this.chairId,
     required this.timestamp,
     required this.imageId,
-    required this.isReceiptUpload,
+    required this.isImageUpload,
+    required this.tagId,
+    required this.checkInStatus,
+    required this.iconIndex,
+
+    // required this.price,
+    // required this.item,
+    // required this.category,
+    // required this.iconIndex,
+    // required this.lat,
+    // required this.lon,
+    // required this.timestamp,
+    // required this.imageId,
+    // required this.isReceiptUpload,
   });
   final String id;
   final String name;
-  final String price;
-  final String item;
-  final String category;
-  final int iconIndex;
-  final double lat;
-  final double lon;
+  final String chairId;
   final int timestamp;
-  final bool isReceiptUpload;
   final String imageId;
+  final bool isImageUpload;
+  final String tagId;
+  final String checkInStatus;
+  final int iconIndex;
+  //
+  // final String price;
+  // final String item;
+  // final String category;
+  // final int iconIndex;
+  // final double lat;
+  // final double lon;
+  // final int timestamp;
+  // final bool isReceiptUpload;
+  // final String imageId;
 // final Timestamp timestamp;
 }
 
 enum Attending { yes, no, unknown }
 
-// class AddSpendingItem extends StatefulWidget {
-//   const AddSpendingItem({Key? key, required this.addItem}) : super(key: key);
-//   final FutureOr<void> Function(
-//       String item, String price, String imageId, bool isReceiptUpload) addItem;
-//
-//   @override
-//   _AddSpendingItemState createState() => _AddSpendingItemState();
-// }
+class AddSmartChairItem extends StatefulWidget {
+  const AddSmartChairItem({Key? key, required this.addItem}) : super(key: key);
+  final FutureOr<void> Function(
+      String chairId, String checkInStatus, String imageId, bool isImageUpload) addItem;
 
-// class _AddSpendingItemState extends State<AddSpendingItem> {
-//   final _formKey = GlobalKey<FormState>(debugLabel: '_AddSpendingItemState');
-//   final _controller = TextEditingController();
-//   final _controller2 = TextEditingController();
-//
-//   late ImageData imageData;
-//   @override
-//   void initState() {
-//     // TODO: implement initState
-//     super.initState();
-//     imageData = ImageData('/noPath', false);
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Padding(
-//           padding: const EdgeInsets.all(8.0),
-//           child: Container(
-//             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
-//             decoration: BoxDecoration(
-//                 color: const Color(0xffC9A87C),
-//                 borderRadius: BorderRadius.circular(8)),
-//             child: Form(
-//               key: _formKey,
-//               child: Column(
-//                 crossAxisAlignment: CrossAxisAlignment.center,
-//                 children: [
-//                   const Text('Enter Item Description & Amount'),
-//                   const SizedBox(
-//                     height: 10,
-//                   ),
-//                   SizedBox(
-//                     height: 60,
-//                     width: MediaQuery.of(context).size.width * 0.9,
-//                     child: TextFormField(
-//                       textCapitalization: TextCapitalization.sentences,
-//                       inputFormatters: [
-//                         LengthLimitingTextInputFormatter(20),
-//                       ],
-//                       controller: _controller,
-//                       decoration: const InputDecoration(
-//                         border: OutlineInputBorder(),
-//                         hintText: 'Add an item description',
-//                         hintStyle: TextStyle(fontSize: 15),
-//                         labelText: 'Description',
-//                         labelStyle: TextStyle(fontSize: 20),
-//                         floatingLabelStyle:
-//                         TextStyle(color: Color(0xffF5E0C3), fontSize: 20),
-//                       ),
-//                       validator: (value) {
-//                         if (value == null || value.isEmpty) {
-//                           return 'Enter item description to continue';
-//                         }
-//                         return null;
-//                       },
-//                     ),
-//                   ),
-//                   const SizedBox(
-//                     height: 10,
-//                   ),
-//                   SizedBox(
-//                     width: 200,
-//                     child: TextFormField(
-//                       controller: _controller2,
-//                       textInputAction: TextInputAction.next,
-//                       inputFormatters: [
-//                         FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
-//                         LengthLimitingTextInputFormatter(7),
-//                         MoneyInputFormatter()
-//                       ],
-//                       keyboardType:
-//                       const TextInputType.numberWithOptions(decimal: true),
-//                       decoration: const InputDecoration(
-//                         border: OutlineInputBorder(),
-//                         prefixText: '£ ',
-//                         labelText: 'Amount',
-//                         labelStyle: TextStyle(fontSize: 20),
-//                         floatingLabelStyle:
-//                         TextStyle(color: Color(0xffF5E0C3), fontSize: 20),
-//                       ),
-//                       validator: (value) {
-//                         if (value == null || value.isEmpty) {
-//                           return 'Enter the amount';
-//                         }
-//                         return null;
-//                       },
-//                     ),
-//                   ),
-//                   const SizedBox(
-//                     height: 15,
-//                   ),
-//                   imageData.receiptStatus == true
-//                       ? SizedBox(
-//                       height: 100,
-//                       width: 300,
-//                       child: Image.file(File(imageData.imagePath)))
-//                       : const Text("Click to add a receipt"),
-//                   const SizedBox(
-//                     height: 15,
-//                   ),
-//                   SizedBox(
-//                     width: MediaQuery.of(context).size.width * 0.5,
-//                     height: 50,
-//                     child: OutlinedButton(
-//                       style: OutlinedButton.styleFrom(
-//                         shape: RoundedRectangleBorder(
-//                             borderRadius: BorderRadius.circular(25)),
-//                         side: const BorderSide(
-//                             width: 3, color: const Color(0xffF5E0C3)),
-//                       ),
-//                       onPressed: () async {
-//                         try {
-//                           WidgetsFlutterBinding.ensureInitialized();
-//                           // Obtain a list of the available cameras on the device.
-//                           final cameras = await availableCameras();
-//                           // Get a specific camera from the list of available cameras.
-//                           final firstCamera = cameras.first;
-//
-//                           // imageData.receiptStatus = ReceiptStatus.notCaptured;
-//
-//                           await Navigator.of(context)
-//                               .push(
-//                             MaterialPageRoute(
-//                               builder: (context) => AddReceiptPage(
-//                                 camera: firstCamera,
-//                               ),
-//                             ),
-//                           )
-//                               .then((value) {
-//                             print(value);
-//                             imageData = value;
-//                             print(imageData.imagePath);
-//                             print(imageData.receiptStatus);
-//
-//                             setState(() {});
-//                             // print(value[0].toString());
-//                             // print(value[1].toString());
-//                           });
-//                         } catch (e) {
-//                           print(e);
-//                         }
-//                       },
-//                       child: Row(
-//                         children: [
-//                           const Icon(Icons.camera_alt_rounded),
-//                           const SizedBox(width: 10),
-//                           imageData.receiptStatus == true
-//                               ? const Text(
-//                             'Re-capture',
-//                             style: TextStyle(fontSize: 16),
-//                           )
-//                               : const Text(
-//                             'Add a receipt',
-//                             style: TextStyle(fontSize: 16),
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                   const SizedBox(
-//                     height: 10,
-//                   ),
-//                   SizedBox(
-//                     width: MediaQuery.of(context).size.width * 0.5,
-//                     height: 50,
-//                     child: ElevatedButton(
-//                       style: ElevatedButton.styleFrom(
-//                           primary: const Color(0xff6D42CE),
-//                           onPrimary: Colors.white,
-//                           shape: RoundedRectangleBorder(
-//                             borderRadius: BorderRadius.circular(25),
-//                           ),
-//                           // padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-//                           textStyle: const TextStyle(
-//                               fontSize: 30, fontWeight: FontWeight.bold)),
-//                       onPressed: () async {
-//                         if (_formKey.currentState!.validate()) {
-//                           await widget.addItem(
-//                               _controller.text,
-//                               _controller2.text,
-//                               imageData.imagePath.substring(
-//                                   imageData.imagePath.lastIndexOf('/')),
-//                               imageData.receiptStatus);
-//                           _controller.clear();
-//                           _controller2.clear();
-//
-//                           if (imageData.receiptStatus) {
-//                             uploadImage();
-//                           }
-//
-//                           imageData.receiptStatus = false;
-//                           imageData.imagePath = '/noPath';
-//                           await showAddItemDoneDialog();
-//                           setState(() {});
-//                         }
-//                       },
-//                       child: Row(
-//                         children: const [
-//                           Icon(
-//                             Icons.add_circle_rounded,
-//                             color: Color(0xffF5E0C3),
-//                           ),
-//                           SizedBox(width: 10),
-//                           Text(
-//                             'Add an Item',
-//                             style: TextStyle(
-//                                 fontSize: 16,
-//                                 color: Color(0xffF5E0C3),
-//                                 fontWeight: FontWeight.bold),
-//                           ),
-//                         ],
-//                       ),
-//                     ),
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ),
-//         const SizedBox(height: 8),
-//         const SizedBox(height: 8),
-//       ],
-//     );
-//   }
-//
-//   Future<bool?> showAddItemDoneDialog() {
-//     return showDialog<bool>(
-//       context: context,
-//       builder: (context) {
-//         return AlertDialog(
-//           title: const Text("Congratulations!"),
-//           content: const Text("Item is added to Money Tracker"),
-//           actions: <Widget>[
-//             TextButton(
-//               child: const Text(
-//                 "OK",
-//                 style: TextStyle(color: Color(0xff6D42CE)),
-//               ),
-//               onPressed: () => Navigator.of(context).pop(),
-//             ),
-//             // TextButton(
-//             //   child: Text("delete"),
-//             //   onPressed: () {
-//             //     Navigator.of(context).pop(true);
-//             //   },
-//             // ),
-//           ],
-//         );
-//       },
-//     );
-//   }
-//
-//   void uploadImage() {
-//     final storage = FirebaseStorage.instance;
-//     File file = File(imageData.imagePath);
-//
-//     final imageName =
-//     imageData.imagePath.substring(imageData.imagePath.lastIndexOf('/'));
-//
-//     // Create the file metadata
-//     final metadata = SettableMetadata(contentType: "image/jpeg");
-//
-// // Create a reference to the Firebase Storage bucket
-//     final storageRef = FirebaseStorage.instance.ref();
-//
-// // Upload file and metadata to the path 'images/mountains.jpg'
-//     final uploadTask = storageRef
-//         .child(
-//         'images/spendingReport/${FirebaseAuth.instance.currentUser?.uid}/$imageName')
-//         .putFile(file, metadata);
-//     // Listen for state changes, errors, and completion of the upload.
-//     uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) {
-//       switch (taskSnapshot.state) {
-//         case TaskState.running:
-//           final progress =
-//               100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
-//           print("Upload is $progress% complete.");
-//           break;
-//         case TaskState.paused:
-//           print("Upload is paused.");
-//           break;
-//         case TaskState.canceled:
-//           print("Upload was canceled");
-//           break;
-//         case TaskState.error:
-//         // Handle unsuccessful uploads
-//           break;
-//         case TaskState.success:
-//         // Handle successful uploads on complete
-//         // ...
-//           break;
-//       }
-//     });
-//   }
-// }
-
-class DisplaySpendingItem extends StatefulWidget {
-  const DisplaySpendingItem({Key? key, required this.items}) : super(key: key);
-  final List<SmartChairReportMessage> items; // new
   @override
-  _DisplaySpendingItemState createState() => _DisplaySpendingItemState();
+  _AddSmartChairItemState createState() => _AddSmartChairItemState();
 }
 
-class _DisplaySpendingItemState extends State<DisplaySpendingItem> {
+class _AddSmartChairItemState extends State<AddSmartChairItem> {
+  final _formKey = GlobalKey<FormState>(debugLabel: '_AddSpendingItemState');
+  final _controller = TextEditingController();
+  final _controller2 = TextEditingController();
+
+  late ImageData imageData;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    imageData = ImageData('/noPath', false);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
+            decoration: BoxDecoration(
+                color: const Color(0xffC9A87C),
+                borderRadius: BorderRadius.circular(8)),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Text('Enter Item Description & Amount'),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  // SizedBox(
+                  //   height: 60,
+                  //   width: MediaQuery.of(context).size.width * 0.9,
+                  //   child: TextFormField(
+                  //     textCapitalization: TextCapitalization.sentences,
+                  //     inputFormatters: [
+                  //       LengthLimitingTextInputFormatter(20),
+                  //     ],
+                  //     controller: _controller,
+                  //     decoration: const InputDecoration(
+                  //       border: OutlineInputBorder(),
+                  //       hintText: 'Add an item description',
+                  //       hintStyle: TextStyle(fontSize: 15),
+                  //       labelText: 'Description',
+                  //       labelStyle: TextStyle(fontSize: 20),
+                  //       floatingLabelStyle:
+                  //       TextStyle(color: Color(0xffF5E0C3), fontSize: 20),
+                  //     ),
+                  //     validator: (value) {
+                  //       if (value == null || value.isEmpty) {
+                  //         return 'Enter item description to continue';
+                  //       }
+                  //       return null;
+                  //     },
+                  //   ),
+                  // ),
+                  // const SizedBox(
+                  //   height: 10,
+                  // ),
+                  // SizedBox(
+                  //   width: 200,
+                  //   child: TextFormField(
+                  //     controller: _controller2,
+                  //     textInputAction: TextInputAction.next,
+                  //     inputFormatters: [
+                  //       FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
+                  //       LengthLimitingTextInputFormatter(7),
+                  //       // MoneyInputFormatter()
+                  //     ],
+                  //     keyboardType:
+                  //     const TextInputType.numberWithOptions(decimal: true),
+                  //     decoration: const InputDecoration(
+                  //       border: OutlineInputBorder(),
+                  //       prefixText: '£ ',
+                  //       labelText: 'Amount',
+                  //       labelStyle: TextStyle(fontSize: 20),
+                  //       floatingLabelStyle:
+                  //       TextStyle(color: Color(0xffF5E0C3), fontSize: 20),
+                  //     ),
+                  //     validator: (value) {
+                  //       if (value == null || value.isEmpty) {
+                  //         return 'Enter the amount';
+                  //       }
+                  //       return null;
+                  //     },
+                  //   ),
+                  // ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  imageData.imageStatus == true
+                      ? SizedBox(
+                      height: 100,
+                      width: 300,
+                      child: Image.file(File(imageData.imagePath)))
+                      : const Text("Click to add a receipt"),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    height: 50,
+                    child: OutlinedButton(
+                      style: OutlinedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25)),
+                        side: const BorderSide(
+                            width: 3, color: const Color(0xffF5E0C3)),
+                      ),
+                      onPressed: () async {
+                        try {
+                          WidgetsFlutterBinding.ensureInitialized();
+                          // Obtain a list of the available cameras on the device.
+                          final cameras = await availableCameras();
+                          // Get a specific camera from the list of available cameras.
+                          final firstCamera = cameras.first;
+
+                          // imageData.receiptStatus = ReceiptStatus.notCaptured;
+
+                          await Navigator.of(context)
+                              .push(
+                            MaterialPageRoute(
+                              builder: (context) => AddImagePage(
+                                camera: firstCamera,
+                              ),
+                            ),
+                          )
+                              .then((value) {
+                            print(value);
+                            imageData = value;
+                            print(imageData.imagePath);
+                            print(imageData.imageStatus);
+
+                            setState(() {});
+                            // print(value[0].toString());
+                            // print(value[1].toString());
+                          });
+                        } catch (e) {
+                          print(e);
+                        }
+                      },
+                      child: Row(
+                        children: [
+                          const Icon(Icons.camera_alt_rounded),
+                          const SizedBox(width: 10),
+                          imageData.imageStatus == true
+                              ? const Text(
+                            'Re-capture',
+                            style: TextStyle(fontSize: 16),
+                          )
+                              : const Text(
+                            'Add a receipt',
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.5,
+                    height: 50,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          primary: const Color(0xff6D42CE),
+                          onPrimary: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          // padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                          textStyle: const TextStyle(
+                              fontSize: 30, fontWeight: FontWeight.bold)),
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          await widget.addItem(
+                              'chairId',
+                              'checkInStatus',
+                              imageData.imagePath.substring(
+                                  imageData.imagePath.lastIndexOf('/')),
+                              imageData.imageStatus);
+
+                          // String chairId, String tagId, String checkInStatus, String imageId, bool isImageUpload
+                          _controller.clear();
+                          _controller2.clear();
+
+                          if (imageData.imageStatus) {
+                            uploadImage();
+                          }
+
+                          imageData.imageStatus = false;
+                          imageData.imagePath = '/noPath';
+                          await showAddItemDoneDialog();
+                          setState(() {});
+                        }
+                      },
+                      child: Row(
+                        children: const [
+                          Icon(
+                            Icons.add_circle_rounded,
+                            color: Color(0xffF5E0C3),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Add an Item',
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Color(0xffF5E0C3),
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        const SizedBox(height: 8),
+      ],
+    );
+  }
+
+  Future<bool?> showAddItemDoneDialog() {
+    return showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: const Text("Congratulations!"),
+          content: const Text("Item is added to Money Tracker"),
+          actions: <Widget>[
+            TextButton(
+              child: const Text(
+                "OK",
+                style: TextStyle(color: Color(0xff6D42CE)),
+              ),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            // TextButton(
+            //   child: Text("delete"),
+            //   onPressed: () {
+            //     Navigator.of(context).pop(true);
+            //   },
+            // ),
+          ],
+        );
+      },
+    );
+  }
+
+  void uploadImage() {
+    final storage = FirebaseStorage.instance;
+    File file = File(imageData.imagePath);
+
+    final imageName =
+    imageData.imagePath.substring(imageData.imagePath.lastIndexOf('/'));
+
+    // Create the file metadata
+    final metadata = SettableMetadata(contentType: "image/jpeg");
+
+// Create a reference to the Firebase Storage bucket
+    final storageRef = FirebaseStorage.instance.ref();
+
+// Upload file and metadata to the path 'images/mountains.jpg'
+    final uploadTask = storageRef
+        .child(
+        'images/spendingReport/${FirebaseAuth.instance.currentUser?.uid}/$imageName')
+        .putFile(file, metadata);
+    // Listen for state changes, errors, and completion of the upload.
+    uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) {
+      switch (taskSnapshot.state) {
+        case TaskState.running:
+          final progress =
+              100.0 * (taskSnapshot.bytesTransferred / taskSnapshot.totalBytes);
+          print("Upload is $progress% complete.");
+          break;
+        case TaskState.paused:
+          print("Upload is paused.");
+          break;
+        case TaskState.canceled:
+          print("Upload was canceled");
+          break;
+        case TaskState.error:
+        // Handle unsuccessful uploads
+          break;
+        case TaskState.success:
+        // Handle successful uploads on complete
+        // ...
+          break;
+      }
+    });
+  }
+}
+
+class DisplaySmartChairItem extends StatefulWidget {
+  const DisplaySmartChairItem({Key? key, required this.items}) : super(key: key);
+  final List<SmartChairReportMessage> items; // new
+  @override
+  _DisplaySmartChairItemState createState() => _DisplaySmartChairItemState();
+}
+
+class _DisplaySmartChairItemState extends State<DisplaySmartChairItem> {
   double totolAmount = 0;
   @override
   void initState() {
     super.initState();
 
-    for (int i = 0; i < widget.items.length; i++) {
-      totolAmount += double.parse(widget.items[i].price);
-    }
+    // for (int i = 0; i < widget.items.length; i++) {
+    //   totolAmount += double.parse(widget.items[i].price);
+    // }
   }
 
   @override
@@ -467,18 +487,25 @@ class _DisplaySpendingItemState extends State<DisplaySpendingItem> {
             // addSemanticIndexes: true,
             // semanticChildCount: 3,
 
+    // final String id;
+    // final String name;
+    // final String chairId;
+    // final int timestamp;
+    // final String imageId;
+    // final bool isImageUpload;
+    // final String tagId;
+    // final String checkInStatus;
+            // final int iconIndex;
             itemBuilder: (BuildContext context, int index) {
               return ListElement(
                 id: widget.items[index].id,
-                iconIndex: widget.items[index].iconIndex,
-                item: widget.items[index].item,
-                category: widget.items[index].category,
-                price: widget.items[index].price,
-                lat: widget.items[index].lat,
-                lon: widget.items[index].lon,
+                chairId: widget.items[index].chairId,
                 timestamp: widget.items[index].timestamp,
-                isReceiptUpload: widget.items[index].isReceiptUpload,
                 imageId: widget.items[index].imageId,
+                isImageUpload: widget.items[index].isImageUpload,
+                tagId: widget.items[index].tagId,
+                checkInStatus: widget.items[index].checkInStatus,
+                iconIndex: widget.items[index].iconIndex,
               );
             },
 
@@ -520,7 +547,7 @@ class ApplicationState extends ChangeNotifier {
         _loginState = ApplicationLoginState.loggedIn;
         _email = user.email;
         _spendingReportSubscription = FirebaseFirestore.instance
-            .collection('SpendingReport')
+            .collection('SmartChairReport')
             .doc(user.uid)
             .collection(user.uid)
         // .where('userId', isEqualTo: user.uid)
@@ -532,17 +559,26 @@ class ApplicationState extends ChangeNotifier {
           for (final document in snapshot.docs) {
             _smartChairReportMessages.add(
               SmartChairReportMessage(
+
+
+                // final String id;
+                // final String name;
+                // final String chairId;
+                // final int timestamp;
+                // final String imageId;
+                // final bool isImageUpload;
+                // final String tagId;
+                // final String checkInStatus;
+
                 id: document.id,
                 name: document.data()['name'] as String,
-                price: document.data()['price'] as String,
-                item: document.data()['item'] as String,
-                category: document.data()['category'] as String,
-                iconIndex: document.data()['iconIndex'] as int,
-                lat: document.data()['lat'] as double,
-                lon: document.data()['lon'] as double,
+                chairId: document.data()['chairId'] as String,
                 timestamp: document.data()['timestamp'] as int,
-                isReceiptUpload: document.data()['isReceiptUpload'] as bool,
                 imageId: document.data()['imageId'] as String,
+                isImageUpload: document.data()['isImageUpload'] as bool,
+                tagId: document.data()['tagId'] as String,
+                checkInStatus: document.data()['checkInStatus'] as String,
+                iconIndex: document.data()['iconIndex'] as int,
               ),
             );
           }
@@ -675,35 +711,34 @@ class ApplicationState extends ChangeNotifier {
     FirebaseAuth.instance.signOut();
   }
 
-  Future<DocumentReference> addMessageToSpendingReport(
-      String item,
-      String price,
-      String category,
-      int iconIndex,
-      double lat,
-      double lon,
+  Future<DocumentReference> addMessageToSmartChairReport(
+      String chairId,
       String imageId,
-      bool isReceiptUpload) {
+      bool isImageUpload,
+      String tagId,
+      String checkInStatus,
+      int iconIndex,
+      ) {
     if (_loginState != ApplicationLoginState.loggedIn) {
       throw Exception('Must be logged in');
     }
 
+
     return FirebaseFirestore.instance
-        .collection('SpendingReport')
+        .collection('SmartChairReport')
         .doc(FirebaseAuth.instance.currentUser!.uid)
         .collection(FirebaseAuth.instance.currentUser!.uid)
         .add(<String, dynamic>{
-      'item': item,
-      'price': price,
-      'category': category,
+
+      'chairId': chairId,
+      'tagId': tagId,
+      'checkInStatus': checkInStatus,
       'iconIndex': iconIndex,
-      'lat': lat,
-      'lon': lon,
       'timestamp': DateTime.now().millisecondsSinceEpoch,
       'name': FirebaseAuth.instance.currentUser!.displayName,
       'userId': FirebaseAuth.instance.currentUser!.uid,
       'imageId': imageId,
-      'isReceiptUpload': isReceiptUpload,
+      'isImageUpload': isImageUpload,
     });
   }
   //

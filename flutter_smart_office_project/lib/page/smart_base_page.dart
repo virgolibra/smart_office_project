@@ -7,6 +7,7 @@ import 'package:flutter_smart_office_project/page/smart_home_page.dart';
 import 'package:flutter_smart_office_project/page/smart_setting_page.dart';
 import 'package:flutter_smart_office_project/page/smart_mqtt_page.dart';
 import 'package:flutter_smart_office_project/page/smart_table_page.dart';
+import 'package:flutter_smart_office_project/page/test_add_page.dart';
 import 'package:geolocator/geolocator.dart';
 import 'drawer_page.dart';
 import 'package:bottom_bar/bottom_bar.dart';
@@ -69,7 +70,8 @@ class _SmartBasePage extends State<SmartBasePage> {
           // Container(color: Colors.orange),
           SmartMqttPage(),
           SmartTablePage(),
-          SmartSettingPage(email: widget.email!),
+          TestAddPage(),
+          // SmartSettingPage(email: widget.email!),
         ],
         onPageChanged: (index) {
           // Use a better state management solution

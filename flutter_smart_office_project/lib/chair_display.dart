@@ -666,7 +666,7 @@ class _ChairDisplayState extends State<ChairDisplay> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => ChairDetailPage(
-                                id: '01',
+                                chairId: '01',
                               ),
                             ),
                           );

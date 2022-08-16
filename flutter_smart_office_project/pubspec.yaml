@@ -44,6 +44,7 @@ dependencies:
   geolocator: ^8.2.0
   weather: ^2.0.1
   mqtt_client: ^9.6.2
+  camera: ^0.9.4+21
 
 dev_dependencies:
   flutter_test:

@@ -32,30 +32,37 @@ class Paragraph extends StatelessWidget {
 }
 
 class ListElement extends StatefulWidget {
+  // final String id;
+  // final String name;
+  // final String chairId;
+  // final int timestamp;
+  // final String imageId;
+  // final bool isImageUpload;
+  // final String tagId;
+  // final String checkInStatus;
   ListElement(
       {Key? key,
         required this.id,
-      required this.item,
-      required this.category,
-      required this.price,
-      required this.iconIndex,
-      required this.lat,
-      required this.lon,
-      required this.timestamp,
-      required this.isReceiptUpload,
-      required this.imageId})
+      required this.chairId,
+  required this.timestamp,
+  required this.imageId,
+  required this.isImageUpload,
+  required this.tagId,
+  required this.checkInStatus,
+        required this.iconIndex,
+
+
+      })
       : super(key: key);
   // const ListElement(this.text, this.subText);
   final String id;
-  final String item;
-  final String category;
-  final String price;
-  final int iconIndex;
-  final double lat;
-  final double lon;
+  final String chairId;
   final int timestamp;
-  final bool isReceiptUpload;
   final String imageId;
+  final bool isImageUpload;
+  final String tagId;
+  final String checkInStatus;
+  final int iconIndex;
 
   @override
   State<ListElement> createState() => _ListElementState();
@@ -108,7 +115,7 @@ class _ListElementState extends State<ListElement> {
             color: Color(0xff936F3E),
             size: 35,
           ),
-          title: Text(widget.item),
+          title: Text('title'),
           subtitle: Text(formattedDateTime!),
           // subtitle: Text(widget.category),
           tileColor: const Color(0xffDEC29B),
@@ -122,7 +129,7 @@ class _ListElementState extends State<ListElement> {
               children: [
                 Text('£'),
                 Text(
-                  widget.price,
+                  'price',
                   style: TextStyle(fontSize: 24),
                 ),
               ],

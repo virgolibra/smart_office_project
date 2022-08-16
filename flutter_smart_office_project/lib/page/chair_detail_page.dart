@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'dart:developer';
 import '../widgets.dart';
 import 'dart:io';
@@ -9,6 +10,8 @@ import 'dart:async';
 import 'package:flutter_smart_office_project/secrets.dart';
 import 'package:flutter_smart_office_project/widgets.dart';
 
+import 'login_page.dart';
+
 enum AppState {NOT_DOWNLOADED, DOWNLOADING, FINISHED_DOWNLOADING}
 final client = MqttServerClient.withPort(myMqttBroker, '', myMqttPort);
 var pongCount = 0; // Pong counter
@@ -17,9 +20,9 @@ var pongCount = 0; // Pong counter
 class ChairDetailPage extends StatefulWidget {
   const ChairDetailPage({
     Key? key,
-    required this.id,
+    required this.chairId,
   }) : super(key: key);
-  final String id;
+  final String chairId;
   @override
   _ChairDetailPageState createState() => _ChairDetailPageState();
 }
@@ -233,7 +236,7 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
       backgroundColor: Color(0xffffffff),
       appBar: AppBar(
         title: Text(
-          'Seat Detail ${widget.id}',
+          'Seat Detail ${widget.chairId}',
           // widget.item,
           style: const TextStyle(
             fontSize: 18,
@@ -289,7 +292,7 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
               height: 10,
             ),
             Text(
-              'Chair ${widget.id} Check-in',
+              'Chair ${widget.chairId} Check-in',
               style: TextStyle(
                   fontSize: 22,
                   color: Colors.black,
@@ -366,7 +369,7 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
               height: 10,
             ),
             Text(
-              'Chair ${widget.id} Check-in',
+              'Chair ${widget.chairId} Check-in',
               style: TextStyle(
                   fontSize: 22,
                   color: Colors.black,
@@ -412,7 +415,7 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
         width: MediaQuery.of(context).size.width * 0.9,
-        height: MediaQuery.of(context).size.height * 0.3,
+        height: MediaQuery.of(context).size.height * 0.8,
         decoration: BoxDecoration(
             color: const Color(0xffffffff),
             border: Border.all(
@@ -431,7 +434,7 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                  Text(
-                  'Chair ${widget.id} Check-in',
+                  'Chair ${widget.chairId} Check-in',
                   style: TextStyle(
                       fontSize: 22,
                       color: Colors.black,
@@ -511,6 +514,31 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
               },
               icon: const Text('Re-scan', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
               label: Icon(Icons.search_rounded, size: 30,),
+            ),
+
+
+
+            Consumer<ApplicationState>(
+              builder: (context, appState, _) => Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+
+                  AddSmartChairItem(
+                    addItem: ( String chairId, String checkInStatus, String imageId, bool isImageUpload) =>
+                        appState.addMessageToSmartChairReport(
+                          widget.chairId,
+                          imageId,
+                          isImageUpload,
+                          _getTagID,
+                          checkInStatus,
+                          111,
+
+                        ),
+
+                  ),
+
+                ],
+              ),
             ),
           ],
         ),
