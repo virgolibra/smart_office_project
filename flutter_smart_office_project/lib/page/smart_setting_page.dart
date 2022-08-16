@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 
+import '../widgets.dart';
 import 'about_page.dart';
 
 class SmartSettingPage extends StatefulWidget {
@@ -15,12 +16,12 @@ class _SmartSettingPageState extends State<SmartSettingPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xffDEC29B),
+      color: Color(0xffffffff),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(widget.email),
-          ElevatedButton(
+          StyledButton(
             child: const Text('Log Out'),
             onPressed: () {
               Navigator.pop(context);
@@ -28,7 +29,7 @@ class _SmartSettingPageState extends State<SmartSettingPage> {
                   '/login_page', ModalRoute.withName('login_page'));
             },
           ),
-          ElevatedButton(
+          StyledButton(
             child: const Text('About'),
             onPressed: () {
               Navigator.of(context).push(

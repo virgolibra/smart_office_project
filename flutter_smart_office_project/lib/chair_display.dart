@@ -687,7 +687,15 @@ class _ChairDisplayState extends State<ChairDisplay> {
                               color: Color(0xff496571)),
                       tooltip: 'Chair 02 detail info',
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ChairDetailPage(
+                                chairId: '02',
+                              ),
+                            ),
+                          );
+                        });
                       },
                     ),
                     Text('02')
@@ -704,7 +712,15 @@ class _ChairDisplayState extends State<ChairDisplay> {
                               color: Color(0xff496571)),
                       tooltip: 'Chair 03 detail info',
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ChairDetailPage(
+                                chairId: '03',
+                              ),
+                            ),
+                          );
+                        });
                       },
                     ),
                     Text('03')
@@ -725,7 +741,15 @@ class _ChairDisplayState extends State<ChairDisplay> {
                           Icon(Icons.chair_outlined, color: Color(0xff496571)),
                       tooltip: 'Chair 04 detail info',
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ChairDetailPage(
+                                chairId: '04',
+                              ),
+                            ),
+                          );
+                        });
                       },
                     ),
                     Text('04')
@@ -740,7 +764,15 @@ class _ChairDisplayState extends State<ChairDisplay> {
                           Icon(Icons.chair_outlined, color: Color(0xff496571)),
                       tooltip: 'Chair 05 detail info',
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ChairDetailPage(
+                                chairId: '05',
+                              ),
+                            ),
+                          );
+                        });
                       },
                     ),
                     Text('05')
@@ -755,7 +787,15 @@ class _ChairDisplayState extends State<ChairDisplay> {
                           Icon(Icons.chair_outlined, color: Color(0xff496571)),
                       tooltip: 'Chair 06 detail info',
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ChairDetailPage(
+                                chairId: '06',
+                              ),
+                            ),
+                          );
+                        });
                       },
                     ),
                     Text('06')
@@ -776,7 +816,15 @@ class _ChairDisplayState extends State<ChairDisplay> {
                           Icon(Icons.chair_outlined, color: Color(0xff496571)),
                       tooltip: 'Chair 07 detail info',
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ChairDetailPage(
+                                chairId: '07',
+                              ),
+                            ),
+                          );
+                        });
                       },
                     ),
                     Text('07')
@@ -791,7 +839,15 @@ class _ChairDisplayState extends State<ChairDisplay> {
                           Icon(Icons.chair_outlined, color: Color(0xff496571)),
                       tooltip: 'Chair 08 detail info',
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ChairDetailPage(
+                                chairId: '08',
+                              ),
+                            ),
+                          );
+                        });
                       },
                     ),
                     Text('08')
@@ -806,7 +862,15 @@ class _ChairDisplayState extends State<ChairDisplay> {
                           Icon(Icons.chair_outlined, color: Color(0xff496571)),
                       tooltip: 'Chair 09 detail info',
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ChairDetailPage(
+                                chairId: '09',
+                              ),
+                            ),
+                          );
+                        });
                       },
                     ),
                     Text('09')

@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_office_project/page/table_record_page.dart';
 // import 'package:flutter_casa0015_mobile_app/page/item_detail_page.dart';
 import 'package:intl/intl.dart';
 
@@ -34,35 +36,34 @@ class Paragraph extends StatelessWidget {
 class ListElement extends StatefulWidget {
   // final String id;
   // final String name;
-  // final String chairId;
+  // final String tableId;
   // final int timestamp;
   // final String imageId;
   // final bool isImageUpload;
   // final String tagId;
   // final String checkInStatus;
-  ListElement(
-      {Key? key,
-        required this.id,
-      required this.chairId,
-  required this.timestamp,
-  required this.imageId,
-  required this.isImageUpload,
-  required this.tagId,
-  required this.checkInStatus,
-        required this.iconIndex,
-
-
-      })
-      : super(key: key);
+  ListElement({
+    Key? key,
+    required this.id,
+    required this.tableId,
+    required this.timestamp,
+    required this.imageId,
+    required this.isImageUpload,
+    required this.tagId,
+    required this.checkInStatus,
+    required this.iconIndex,
+    required this.name,
+  }) : super(key: key);
   // const ListElement(this.text, this.subText);
   final String id;
-  final String chairId;
+  final String tableId;
   final int timestamp;
   final String imageId;
   final bool isImageUpload;
   final String tagId;
   final String checkInStatus;
   final int iconIndex;
+  final String name;
 
   @override
   State<ListElement> createState() => _ListElementState();
@@ -70,18 +71,13 @@ class ListElement extends StatefulWidget {
 
 class _ListElementState extends State<ListElement> {
   List<IconData> iconsList = [
-    Icons.widgets_rounded, // General
-    Icons.receipt_rounded, // Bills
-    Icons.restaurant_rounded, // Eating out
-    Icons.delivery_dining_rounded, // Delivery
-    Icons.emoji_emotions_rounded, // Entertainment
-    Icons.card_giftcard_rounded, // Gifts
-    Icons.store_rounded, // Groceries
-    Icons.airplanemode_active_rounded, // Travel
-    Icons.shopping_cart_rounded, // Shopping
-    Icons.directions_bus_rounded, // Transport
-    Icons.favorite_rounded, // Personal care
-    Icons.pets_rounded, // Pets
+    Icons.login_rounded,
+    Icons.logout_rounded,
+  ];
+
+  List<String> iconsDescribe = [
+    "Check-in",
+    "Check-out",
   ];
 
   DateTime? dateTime;
@@ -95,8 +91,7 @@ class _ListElementState extends State<ListElement> {
     // TODO: implement initState
 
     dateTime = DateTime.fromMillisecondsSinceEpoch(widget.timestamp);
-    formattedDateTime =
-        DateFormat('HH:mm:ss dd/MM/yy').format(dateTime!);
+    formattedDateTime = DateFormat('HH:mm:ss dd/MM/yy').format(dateTime!);
     date =
         '${dateTime!.day.toString()} ${DateFormat('MMMM').format(dateTime!)} ${dateTime!.year.toString()}';
     time =
@@ -107,64 +102,62 @@ class _ListElementState extends State<ListElement> {
   }
 
   @override
-  Widget build(BuildContext context) => Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 4),
-        child: ListTile(
-          leading: Icon(
-            iconsList[widget.iconIndex],
-            color: Color(0xff936F3E),
-            size: 35,
-          ),
-          title: Text('title'),
-          subtitle: Text(formattedDateTime!),
-          // subtitle: Text(widget.category),
-          tileColor: const Color(0xffDEC29B),
+  Widget build(BuildContext context) => SizedBox(
+        height: 50,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 1),
+          child: ListTile(
+            // visualDensity: VisualDensity(vertical: 1),
+            leading: Icon(
+              iconsList[widget.iconIndex],
+              color: Color(0xff242f35),
+              size: 20,
+            ),
+            title: Text(
+              widget.name,
+              style: TextStyle(fontSize: 10),
+            ),
+            subtitle: Text(
+              iconsDescribe[widget.iconIndex],
+              style: TextStyle(fontSize: 10),
+            ),
+            // subtitle: Text(widget.category),
+            tileColor: const Color(0xffffffff),
+            horizontalTitleGap: 1,
 
-          trailing: SizedBox(
-            height: 40,
-            width: 110,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text('£'),
-                Text(
-                  'price',
-                  style: TextStyle(fontSize: 24),
+            trailing: SizedBox(
+              height: 20,
+              width: 110,
+              child: Text(
+                formattedDateTime!,
+                style: TextStyle(fontSize: 12),
+              ),
+            ),
+
+            // enabled: true,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(5),
+              side: BorderSide(
+                color: Color(0xffffffff),
+                width: 2,
+              ),
+            ),
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => TableRecordPage(
+                    tableId: widget.tableId,
+                    iconIndex: widget.iconIndex,
+                    timestamp: widget.timestamp,
+                    isImageUpload: widget.isImageUpload,
+                    imageId: widget.imageId,
+                    name: widget.name,
+                    tagId: widget.tagId,
+                  ),
                 ),
-              ],
-            ),
+              );
+            },
           ),
-
-          // enabled: true,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-            side: BorderSide(
-              color: Color(0xffF5E0C3),
-              width: 2,
-            ),
-          ),
-          onTap: () {
-            // Navigator.pushNamed(context, '/first_page');
-
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (context) => ItemDetailPage(
-            //       id: widget.id,
-            //       lat: widget.lat,
-            //       lon: widget.lon,
-            //       item: widget.item,
-            //       category: widget.category,
-            //       iconIndex: widget.iconIndex,
-            //       price: widget.price,
-            //       timestamp: widget.timestamp,
-            //       isReceiptUpload: widget.isReceiptUpload,
-            //       imageId: widget.imageId,
-            //     ),
-            //   ),
-            // );
-
-          },
         ),
       );
 }
@@ -287,15 +280,15 @@ class StyledIconButton4 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => OutlinedButton.icon(
-    style: OutlinedButton.styleFrom(
-      side: const BorderSide(color: Color(0xff354856)),
-      backgroundColor: const Color(0xff354856),
-      textStyle: const TextStyle(fontSize: 15, color: Color(0xffffffff)),
-    ),
-    onPressed: onPressed,
-    icon: icon,
-    label: label,
-  );
+        style: OutlinedButton.styleFrom(
+          side: const BorderSide(color: Color(0xff354856)),
+          backgroundColor: const Color(0xff354856),
+          textStyle: const TextStyle(fontSize: 15, color: Color(0xffffffff)),
+        ),
+        onPressed: onPressed,
+        icon: icon,
+        label: label,
+      );
 }
 
 class StyledIconButton5 extends StatelessWidget {
@@ -307,14 +300,15 @@ class StyledIconButton5 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => OutlinedButton.icon(
-    style: OutlinedButton.styleFrom(
-      side: const BorderSide(color: Color(0xffE09E45)),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(40)),
-      backgroundColor: const Color(0xffE09E45),
-      textStyle: const TextStyle(fontSize: 15, color: Color(0xffffffff)),
-    ),
-    onPressed: onPressed,
-    icon: icon,
-    label: label,
-  );
+        style: OutlinedButton.styleFrom(
+          side: const BorderSide(color: Color(0xffE09E45)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+          backgroundColor: const Color(0xffE09E45),
+          textStyle: const TextStyle(fontSize: 12, color: Color(0xffffffff)),
+        ),
+        onPressed: onPressed,
+        icon: icon,
+        label: label,
+      );
 }

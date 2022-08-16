@@ -70,8 +70,7 @@ class _SmartBasePage extends State<SmartBasePage> {
           // Container(color: Colors.orange),
           SmartMqttPage(),
           SmartTablePage(),
-          TestAddPage(),
-          // SmartSettingPage(email: widget.email!),
+          SmartSettingPage(email: widget.email!),
         ],
         onPageChanged: (index) {
           // Use a better state management solution

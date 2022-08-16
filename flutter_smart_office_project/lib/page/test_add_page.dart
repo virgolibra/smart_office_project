@@ -162,43 +162,43 @@ class _TestAddPageState extends State<TestAddPage> {
                 ),
               ],
             ),
-
-            Consumer<ApplicationState>(
-              builder: (context, appState, _) => Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // SpendingReport(
-                  //   addMessage: (message, type) =>
-                  //       appState.addMessageToSpendingReport(message, type),
-                  //   messages: appState.spendingReportMessages,
-                  // ),
-                  AddSmartChairItem(
-                    addItem: ( String chairId, String tagId, String checkInStatus, String imageId, bool isImageUpload) =>
-                        appState.addMessageToSmartChairReport(
-                            chairId,
-                          imageId,
-                          isImageUpload,
-                            tagId,
-                            checkInStatus,
-                            buttonOnPressed,
-
-                          ),
-
-                    // String chairId,
-                    // String imageId,
-                    // bool isImageUpload,
-                    // String tagId,
-                    // String checkInStatus,
-                    // int iconIndex,
-                    // messages: appState.spendingReportMessages,
-                  ),
-
-                  // DisplaySpendingItem(
-                  //   messages: appState.spendingReportMessages,
-                  // ),
-                ],
-              ),
-            ),
+            //
+            // Consumer<ApplicationState>(
+            //   builder: (context, appState, _) => Column(
+            //     crossAxisAlignment: CrossAxisAlignment.center,
+            //     children: [
+            //       // SpendingReport(
+            //       //   addMessage: (message, type) =>
+            //       //       appState.addMessageToSpendingReport(message, type),
+            //       //   messages: appState.spendingReportMessages,
+            //       // ),
+            //       AddSmartTableItem(
+            //         addItem: ( String checkInStatus, String imageId, bool isImageUpload) =>
+            //             appState.addMessageToSmartChairReport(
+            //               'widget.chairId',
+            //               imageId,
+            //               isImageUpload,
+            //               '_getTagID',
+            //               checkInStatus,
+            //               111,
+            //
+            //               ),
+            //
+            //         // String chairId,
+            //         // String imageId,
+            //         // bool isImageUpload,
+            //         // String tagId,
+            //         // String checkInStatus,
+            //         // int iconIndex,
+            //         // messages: appState.spendingReportMessages,
+            //       ),
+            //
+            //       // DisplaySpendingItem(
+            //       //   messages: appState.spendingReportMessages,
+            //       // ),
+            //     ],
+            //   ),
+            // ),
 
             //
             // Text(

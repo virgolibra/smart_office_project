@@ -12,10 +12,9 @@ import 'package:flutter_smart_office_project/widgets.dart';
 
 import 'login_page.dart';
 
-enum AppState {NOT_DOWNLOADED, DOWNLOADING, FINISHED_DOWNLOADING}
+enum AppState { NOT_DOWNLOADED, DOWNLOADING, FINISHED_DOWNLOADING }
 final client = MqttServerClient.withPort(myMqttBroker, '', myMqttPort);
 var pongCount = 0; // Pong counter
-
 
 class ChairDetailPage extends StatefulWidget {
   const ChairDetailPage({
@@ -28,7 +27,6 @@ class ChairDetailPage extends StatefulWidget {
 }
 
 class _ChairDetailPageState extends State<ChairDetailPage> {
-
   AppState _state = AppState.NOT_DOWNLOADED;
   final ValueNotifier<String> _msg = ValueNotifier<String>('unknown Message');
   final ValueNotifier<String> _tpc = ValueNotifier<String>('unknown Topic');
@@ -37,6 +35,12 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
   String _getTagID = '00000000';
   bool isDataCollected = false;
   String formattedTime = DateFormat("HH:mm:ss").format(DateTime.now());
+  int buttonOnPressed = 0;
+
+  List<IconData> iconsList = [
+    Icons.login_rounded,
+    Icons.logout_rounded,
+  ];
 
   @override
   void initState() {
@@ -45,7 +49,6 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
   }
 
   Future<int> connect() async {
-
     setState(() {
       _state = AppState.DOWNLOADING;
     });
@@ -62,7 +65,7 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
         .authenticateAs(myMqttUsername, myMqttPassword)
         .withClientIdentifier('Mqtt_MyClientUniqueId')
         .withWillTopic(
-        'willtopic') // If you set this you must set a will message
+            'willtopic') // If you set this you must set a will message
         .withWillMessage('My Will message')
         .startClean() // Non persistent session for testing
         .withWillQos(MqttQos.atLeastOnce);
@@ -94,8 +97,10 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
 
     /// Ok, lets try a subscription
     print('EXAMPLE::Subscribing to the student/CASA0022/ucfnmz0/nano33/');
-    const topic1 = 'student/CASA0022/ucfnmz0/nano33/tagFlag'; // Not a wildcard topic
-    const topic2 = 'student/CASA0022/ucfnmz0/nano33/tagID'; // Not a wildcard topic
+    const topic1 =
+        'student/CASA0022/ucfnmz0/nano33/tagFlag'; // Not a wildcard topic
+    const topic2 =
+        'student/CASA0022/ucfnmz0/nano33/tagID'; // Not a wildcard topic
 
     client.subscribe(topic1, MqttQos.atMostOnce);
     client.subscribe(topic2, MqttQos.atMostOnce);
@@ -104,7 +109,8 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
     /// notifications of published updates to each subscribed topic.
     client.updates!.listen((List<MqttReceivedMessage<MqttMessage?>>? c) {
       final recMess = c![0].payload as MqttPublishMessage;
-      final pt = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+      final pt =
+          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
       _tpc.value = c[0].topic;
       _msg.value = pt;
 
@@ -121,12 +127,10 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
           break;
       }
 
-      if (_tagFlag == '1'){
+      if (_tagFlag == '1') {
         _getTagID = _tagID;
         isDataCollected = true;
       }
-
-
 
       /// The above may seem a little convoluted for users only interested in the
       /// payload, some users however may be interested in the received publish message,
@@ -180,7 +184,6 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
     setState(() {
       _state = AppState.FINISHED_DOWNLOADING;
       formattedTime = DateFormat("HH:mm:ss").format(DateTime.now());
-
     });
     return 0;
   }
@@ -220,7 +223,6 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
     pongCount++;
   }
 
-
   @override
   void dispose() {
     _msg.dispose();
@@ -248,17 +250,70 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
       ),
       body: ListView(
         children: [
-        //   StyledIconButton2(
-        //   onPressed: () async {
-        //
-        //   },
-        //   icon: const Text('Check in'),
-        //   label: Icon(Icons.keyboard_arrow_right_rounded),
-        // ),
+          //   StyledIconButton2(
+          //   onPressed: () async {
+          //
+          //   },
+          //   icon: const Text('Check in'),
+          //   label: Icon(Icons.keyboard_arrow_right_rounded),
+          // ),
           SizedBox(
             height: 10,
           ),
-          _rfidView(),
+          // _rfidView(),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 2),
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.height * 0.6,
+              decoration: BoxDecoration(
+                  color: const Color(0xffffffff),
+                  border: Border.all(
+                    color: Color(0xff242f35),
+                    width: 8,
+                  ),
+                  borderRadius: BorderRadius.circular(10)),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Chair ${widget.chairId} Record',
+                        style: TextStyle(
+                            fontSize: 15,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w700),
+                      ),
+                    ],
+                  ),
+                  const Divider(
+                    height: 8,
+                    thickness: 2,
+                    indent: 0,
+                    endIndent: 0,
+                    color: Colors.black,
+                  ),
+                  // Consumer<ApplicationState>(
+                  //   builder: (context, appState, _) => Column(
+                  //     crossAxisAlignment: CrossAxisAlignment.center,
+                  //     children: [
+                  //       DisplaySmartChairItem(
+                  //         items: appState.smartChairReportMessages,
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
+                ],
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -267,8 +322,8 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
   Widget _rfidView() => _state == AppState.FINISHED_DOWNLOADING
       ? contentFinishedDownload()
       : _state == AppState.DOWNLOADING
-      ? contentDownloading()
-      : contentNotDownloaded();
+          ? contentDownloading()
+          : contentNotDownloaded();
 
   Widget contentNotDownloaded() {
     return Padding(
@@ -276,7 +331,7 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
         width: MediaQuery.of(context).size.width * 0.9,
-        height: MediaQuery.of(context).size.height * 0.3,
+        height: MediaQuery.of(context).size.height * 0.5,
         decoration: BoxDecoration(
             color: const Color(0xffffffff),
             border: Border.all(
@@ -318,11 +373,15 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
                       ),
                       Text(
                         'Press the button to start check-in',
-                        style: TextStyle(color: Colors.black,),
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
                       ),
                       Text(
                         'Please swipe the card over the reader',
-                        style: TextStyle(color: Colors.black,),
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
                       ),
                       const SizedBox(
                         height: 20,
@@ -331,8 +390,14 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
                         onPressed: () async {
                           connect();
                         },
-                        icon: const Text('Check-in', style: TextStyle(fontWeight: FontWeight.bold),),
-                        label: Icon(Icons.exit_to_app_outlined, size: 50,),
+                        icon: const Text(
+                          'Check-in',
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        label: Icon(
+                          Icons.exit_to_app_outlined,
+                          size: 50,
+                        ),
                       ),
                     ],
                   ),
@@ -353,7 +418,7 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
         width: MediaQuery.of(context).size.width * 0.9,
-        height: MediaQuery.of(context).size.height * 0.3,
+        height: MediaQuery.of(context).size.height * 0.5,
         decoration: BoxDecoration(
             color: const Color(0xffffffff),
             border: Border.all(
@@ -389,16 +454,25 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
                 ),
                 const Text(
                   'Fetching RFID Data...',
-                  style: TextStyle(fontSize: 20, color: Colors.black,),
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                  ),
                 ),
                 const Text(
                   'Please do not leave this page.',
-                  style: TextStyle(fontSize: 20, color:Colors.black,),
+                  style: TextStyle(
+                    fontSize: 20,
+                    color: Colors.black,
+                  ),
                 ),
                 Container(
                     margin: const EdgeInsets.only(top: 50),
                     child: const Center(
-                        child: CircularProgressIndicator(strokeWidth: 10))),
+                        child: CircularProgressIndicator(
+                      strokeWidth: 10,
+                      color: Colors.black,
+                    ))),
               ],
             ),
 
@@ -410,140 +484,193 @@ class _ChairDetailPageState extends State<ChairDetailPage> {
   }
 
   Widget contentFinishedDownload() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 2),
-        width: MediaQuery.of(context).size.width * 0.9,
-        height: MediaQuery.of(context).size.height * 0.8,
-        decoration: BoxDecoration(
-            color: const Color(0xffffffff),
-            border: Border.all(
-              color: Color(0xff242f35),
-              width: 8,
-            ),
-            borderRadius: BorderRadius.circular(10)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            const SizedBox(
-              height: 10,
-            ),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                 Text(
-                  'Chair ${widget.chairId} Check-in',
-                  style: TextStyle(
-                      fontSize: 22,
-                      color: Colors.black,
-                      fontWeight: FontWeight.w700),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+            width: MediaQuery.of(context).size.width * 0.9,
+            height: MediaQuery.of(context).size.height * 0.5,
+            decoration: BoxDecoration(
+                color: const Color(0xffffffff),
+                border: Border.all(
+                  color: Color(0xff242f35),
+                  width: 8,
                 ),
-                Expanded(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: const [
-                      Text(
-                        'based on MQTT',
-                        style: TextStyle(
-                          fontSize: 12,
+                borderRadius: BorderRadius.circular(10)),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      'Chair ${widget.chairId} Scan',
+                      style: TextStyle(
+                          fontSize: 22,
                           color: Colors.black,
+                          fontWeight: FontWeight.w700),
+                    ),
+                    Expanded(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: const [
+                          Text(
+                            'based on MQTT',
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                const Divider(
+                  height: 8,
+                  thickness: 2,
+                  indent: 0,
+                  endIndent: 0,
+                  color: Colors.black,
+                ),
+                SizedBox(
+                  height: 50,
+                  child: ListView(
+                    physics: const NeverScrollableScrollPhysics(),
+                    children: [
+                      SizedBox(
+                        height: 30,
+                        child: ListTile(
+                          leading: const Icon(
+                            Icons.label_outline_rounded,
+                            color: Colors.black,
+                          ),
+                          minLeadingWidth: 2,
+                          title: const Text(
+                            'Tag',
+                            style: TextStyle(
+                              color: Colors.black,
+                            ),
+                          ),
+                          selected: false,
+                          trailing: Text(
+                            '${_getTagID}',
+                            style: const TextStyle(
+                              fontSize: 18,
+                              color: Colors.black,
+                            ),
+                          ),
                         ),
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                     ],
                   ),
                 ),
+                Text(
+                  isDataCollected
+                      ? "Updated at $formattedTime "
+                      : "No valid card data. Please swipe the card again or check the device connection.",
+                  style: TextStyle(color: Colors.black, fontSize: 8),
+                ),
+                // Expanded(child: _weatherIconDisplay()),
+                SizedBox(
+                  height: 2,
+                ),
+                Row(
+                  children: [
+                    StyledIconButton5(
+                      onPressed: () async {
+                        connect();
+                        _state = AppState.DOWNLOADING;
+                      },
+                      icon: const Text(
+                        'Re-scan',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      label: Icon(
+                        Icons.search_rounded,
+                        size: 15,
+                      ),
+                    ),
+                    IconButton(
+                      iconSize: 30,
+                      highlightColor: Colors.red,
+                      // color: const Color(0xff5D4524),
+                      onPressed: () {
+                        setState(() {
+                          buttonOnPressed = 0;
+                          // iconDescriptionIndex = index;
+                        });
+                      },
+                      icon: Icon(iconsList[0]),
+                      color: (buttonOnPressed == 0)
+                          ? Color(0xffE09E45)
+                          : Colors.black,
+                    ),
+                    Text("In", style: TextStyle(fontSize: 12,
+                      color: (buttonOnPressed == 0)
+                          ? Color(0xffE09E45)
+                          : Colors.black, ),),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    IconButton(
+                      iconSize: 30,
+                      highlightColor: Colors.red,
+                      // color: const Color(0xff5D4524),
+                      onPressed: () {
+                        setState(() {
+                          buttonOnPressed = 1;
+                          // iconDescriptionIndex = index;
+                        });
+                      },
+                      icon: Icon(iconsList[1]),
+                      color: (buttonOnPressed == 1)
+                          ? Color(0xffE09E45)
+                          : Colors.black,
+                    ),
+                    Text("Out", style: TextStyle(fontSize: 12,
+                      color: (buttonOnPressed == 1)
+                          ? Color(0xffE09E45)
+                          : Colors.black,),),
+                  ],
+                ),
+
+                // Consumer<ApplicationState>(
+                //   builder: (context, appState, _) => Column(
+                //     crossAxisAlignment: CrossAxisAlignment.center,
+                //     children: [
+                //       AddSmartTableItem(
+                //         addItem: (String checkInStatus, String imageId,
+                //                 bool isImageUpload) =>
+                //             appState.addMessageToSmartChairReport(
+                //           widget.chairId,
+                //           imageId,
+                //           isImageUpload,
+                //           _getTagID,
+                //           checkInStatus,
+                //               buttonOnPressed,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ),
               ],
             ),
-            const Divider(
-              height: 8,
-              thickness: 2,
-              indent: 0,
-              endIndent: 0,
-              color: Colors.black,
-            ),
-            SizedBox(
-              height: 80,
-              child: ListView(
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  SizedBox(
-                    height: 30,
-                    child: ListTile(
-                      leading: const Icon(Icons.outlined_flag_outlined, color:Colors.black,),
-                      minLeadingWidth: 2,
-                      title: const Text('TagFlag', style: TextStyle(color: Colors.black,),),
-                      selected: false,
-                      trailing: Text(
-                        '${_tagFlag}',
-                        style: const TextStyle(fontSize: 18, color: Colors.black,),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 30,
-                    child: ListTile(
-                      leading: const Icon(Icons.label_outline_rounded , color: Colors.black,),
-                      minLeadingWidth: 2,
-                      title: const Text('Tag', style: TextStyle(color: Colors.black,),),
-                      selected: false,
-                      trailing: Text(
-                        '${_getTagID}',
-                        style: const TextStyle(fontSize: 18, color: Colors.black,),
-                      ),
-                    ),
-                  ),
-
-                  SizedBox(
-                    height: 10,
-                  ),
-
-                ],
-              ),
-            ),
-            Text(isDataCollected ? "Updated at $formattedTime " :"No valid MQTT data. Please check the device connection.", style: TextStyle(color: Colors.black,),),
-            // Expanded(child: _weatherIconDisplay()),
-            SizedBox(
-              height: 2,
-            ),
-            StyledIconButton5(
-              onPressed: () async {
-                connect();
-                _state = AppState.DOWNLOADING;
-              },
-              icon: const Text('Re-scan', style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),),
-              label: Icon(Icons.search_rounded, size: 30,),
-            ),
-
-
-
-            Consumer<ApplicationState>(
-              builder: (context, appState, _) => Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-
-                  AddSmartChairItem(
-                    addItem: ( String chairId, String checkInStatus, String imageId, bool isImageUpload) =>
-                        appState.addMessageToSmartChairReport(
-                          widget.chairId,
-                          imageId,
-                          isImageUpload,
-                          _getTagID,
-                          checkInStatus,
-                          111,
-
-                        ),
-
-                  ),
-
-                ],
-              ),
-            ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
-
 }

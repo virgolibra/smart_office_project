@@ -667,7 +667,7 @@ class _TableDisplayState extends State<TableDisplay> {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => TableDetailPage(
-                                id: '01',
+                                tableId: '01',
                               ),
                             ),
                           );
@@ -688,7 +688,15 @@ class _TableDisplayState extends State<TableDisplay> {
                           color: Color(0xff496571)),
                       tooltip: 'Table 02 detail info',
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => TableDetailPage(
+                                tableId: '02',
+                              ),
+                            ),
+                          );
+                        });
                       },
                     ),
                     Text('02')
@@ -705,7 +713,15 @@ class _TableDisplayState extends State<TableDisplay> {
                           color: Color(0xff496571)),
                       tooltip: 'Table 03 detail info',
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => TableDetailPage(
+                                tableId: '03',
+                              ),
+                            ),
+                          );
+                        });
                       },
                     ),
                     Text('03')
@@ -726,7 +742,15 @@ class _TableDisplayState extends State<TableDisplay> {
                       Icon(Icons.table_restaurant_outlined, color: Color(0xff496571)),
                       tooltip: 'Table 04 detail info',
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => TableDetailPage(
+                                tableId: '04',
+                              ),
+                            ),
+                          );
+                        });
                       },
                     ),
                     Text('04')
@@ -741,7 +765,15 @@ class _TableDisplayState extends State<TableDisplay> {
                       Icon(Icons.table_restaurant_outlined, color: Color(0xff496571)),
                       tooltip: 'Table 05 detail info',
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => TableDetailPage(
+                                tableId: '05',
+                              ),
+                            ),
+                          );
+                        });
                       },
                     ),
                     Text('05')
@@ -756,7 +788,15 @@ class _TableDisplayState extends State<TableDisplay> {
                       Icon(Icons.table_restaurant_outlined, color: Color(0xff496571)),
                       tooltip: 'Table 06 detail info',
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => TableDetailPage(
+                                tableId: '06',
+                              ),
+                            ),
+                          );
+                        });
                       },
                     ),
                     Text('06')
@@ -777,7 +817,15 @@ class _TableDisplayState extends State<TableDisplay> {
                       Icon(Icons.table_restaurant_outlined, color: Color(0xff496571)),
                       tooltip: 'Table 07 detail info',
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => TableDetailPage(
+                                tableId: '07',
+                              ),
+                            ),
+                          );
+                        });
                       },
                     ),
                     Text('07')
@@ -792,7 +840,15 @@ class _TableDisplayState extends State<TableDisplay> {
                       Icon(Icons.table_restaurant_outlined, color: Color(0xff496571)),
                       tooltip: 'Table 08 detail info',
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => TableDetailPage(
+                                tableId: '08',
+                              ),
+                            ),
+                          );
+                        });
                       },
                     ),
                     Text('08')
@@ -807,7 +863,15 @@ class _TableDisplayState extends State<TableDisplay> {
                       Icon(Icons.table_restaurant_outlined, color: Color(0xff496571)),
                       tooltip: 'Table 09 detail info',
                       onPressed: () {
-                        setState(() {});
+                        setState(() {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => TableDetailPage(
+                                tableId: '09',
+                              ),
+                            ),
+                          );
+                        });
                       },
                     ),
                     Text('09')

@@ -78,11 +78,11 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class SmartChairReportMessage {
-  SmartChairReportMessage({
+class SmartTableReportMessage {
+  SmartTableReportMessage({
     required this.id,
     required this.name,
-    required this.chairId,
+    required this.tableId,
     required this.timestamp,
     required this.imageId,
     required this.isImageUpload,
@@ -102,7 +102,7 @@ class SmartChairReportMessage {
   });
   final String id;
   final String name;
-  final String chairId;
+  final String tableId;
   final int timestamp;
   final String imageId;
   final bool isImageUpload;
@@ -124,16 +124,16 @@ class SmartChairReportMessage {
 
 enum Attending { yes, no, unknown }
 
-class AddSmartChairItem extends StatefulWidget {
-  const AddSmartChairItem({Key? key, required this.addItem}) : super(key: key);
+class AddSmartTableItem extends StatefulWidget {
+  const AddSmartTableItem({Key? key, required this.addItem}) : super(key: key);
   final FutureOr<void> Function(
-      String chairId, String checkInStatus, String imageId, bool isImageUpload) addItem;
+       String checkInStatus, String imageId, bool isImageUpload) addItem;
 
   @override
-  _AddSmartChairItemState createState() => _AddSmartChairItemState();
+  _AddSmartTableItemState createState() => _AddSmartTableItemState();
 }
 
-class _AddSmartChairItemState extends State<AddSmartChairItem> {
+class _AddSmartTableItemState extends State<AddSmartTableItem> {
   final _formKey = GlobalKey<FormState>(debugLabel: '_AddSpendingItemState');
   final _controller = TextEditingController();
   final _controller2 = TextEditingController();
@@ -154,204 +154,151 @@ class _AddSmartChairItemState extends State<AddSmartChairItem> {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 14),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
             decoration: BoxDecoration(
-                color: const Color(0xffC9A87C),
+                color: const Color(0xff496571),
                 borderRadius: BorderRadius.circular(8)),
             child: Form(
               key: _formKey,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const Text('Enter Item Description & Amount'),
                   const SizedBox(
-                    height: 10,
-                  ),
-                  // SizedBox(
-                  //   height: 60,
-                  //   width: MediaQuery.of(context).size.width * 0.9,
-                  //   child: TextFormField(
-                  //     textCapitalization: TextCapitalization.sentences,
-                  //     inputFormatters: [
-                  //       LengthLimitingTextInputFormatter(20),
-                  //     ],
-                  //     controller: _controller,
-                  //     decoration: const InputDecoration(
-                  //       border: OutlineInputBorder(),
-                  //       hintText: 'Add an item description',
-                  //       hintStyle: TextStyle(fontSize: 15),
-                  //       labelText: 'Description',
-                  //       labelStyle: TextStyle(fontSize: 20),
-                  //       floatingLabelStyle:
-                  //       TextStyle(color: Color(0xffF5E0C3), fontSize: 20),
-                  //     ),
-                  //     validator: (value) {
-                  //       if (value == null || value.isEmpty) {
-                  //         return 'Enter item description to continue';
-                  //       }
-                  //       return null;
-                  //     },
-                  //   ),
-                  // ),
-                  // const SizedBox(
-                  //   height: 10,
-                  // ),
-                  // SizedBox(
-                  //   width: 200,
-                  //   child: TextFormField(
-                  //     controller: _controller2,
-                  //     textInputAction: TextInputAction.next,
-                  //     inputFormatters: [
-                  //       FilteringTextInputFormatter.allow(RegExp("[0-9.]")),
-                  //       LengthLimitingTextInputFormatter(7),
-                  //       // MoneyInputFormatter()
-                  //     ],
-                  //     keyboardType:
-                  //     const TextInputType.numberWithOptions(decimal: true),
-                  //     decoration: const InputDecoration(
-                  //       border: OutlineInputBorder(),
-                  //       prefixText: '£ ',
-                  //       labelText: 'Amount',
-                  //       labelStyle: TextStyle(fontSize: 20),
-                  //       floatingLabelStyle:
-                  //       TextStyle(color: Color(0xffF5E0C3), fontSize: 20),
-                  //     ),
-                  //     validator: (value) {
-                  //       if (value == null || value.isEmpty) {
-                  //         return 'Enter the amount';
-                  //       }
-                  //       return null;
-                  //     },
-                  //   ),
-                  // ),
-                  const SizedBox(
-                    height: 15,
+                    height: 5,
                   ),
                   imageData.imageStatus == true
                       ? SizedBox(
                       height: 100,
                       width: 300,
                       child: Image.file(File(imageData.imagePath)))
-                      : const Text("Click to add a receipt"),
+                      : const Text("Click to add a photo", style: TextStyle(color: Color(0xffffffff)),),
                   const SizedBox(
                     height: 15,
                   ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    height: 50,
-                    child: OutlinedButton(
-                      style: OutlinedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25)),
-                        side: const BorderSide(
-                            width: 3, color: const Color(0xffF5E0C3)),
-                      ),
-                      onPressed: () async {
-                        try {
-                          WidgetsFlutterBinding.ensureInitialized();
-                          // Obtain a list of the available cameras on the device.
-                          final cameras = await availableCameras();
-                          // Get a specific camera from the list of available cameras.
-                          final firstCamera = cameras.first;
 
-                          // imageData.receiptStatus = ReceiptStatus.notCaptured;
+                  Row(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.35,
+                        height: 30,
+                        child: OutlinedButton(
+                          style: OutlinedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15)),
+                            side: const BorderSide(
+                                width: 3, color: const Color(0xffffffff)),
 
-                          await Navigator.of(context)
-                              .push(
-                            MaterialPageRoute(
-                              builder: (context) => AddImagePage(
-                                camera: firstCamera,
+
+                          ),
+                          onPressed: () async {
+                            try {
+                              WidgetsFlutterBinding.ensureInitialized();
+                              // Obtain a list of the available cameras on the device.
+                              final cameras = await availableCameras();
+                              // Get a specific camera from the list of available cameras.
+                              final firstCamera = cameras.first;
+
+                              // imageData.receiptStatus = ReceiptStatus.notCaptured;
+
+                              await Navigator.of(context)
+                                  .push(
+                                MaterialPageRoute(
+                                  builder: (context) => AddImagePage(
+                                    camera: firstCamera,
+                                  ),
+                                ),
+                              )
+                                  .then((value) {
+                                print(value);
+                                imageData = value;
+                                print(imageData.imagePath);
+                                print(imageData.imageStatus);
+
+                                setState(() {});
+                                // print(value[0].toString());
+                                // print(value[1].toString());
+                              });
+                            } catch (e) {
+                              print(e);
+                            }
+                          },
+                          child: Row(
+                            children: [
+                              const Icon(Icons.camera_alt_rounded, size: 15,),
+                              const SizedBox(width: 10),
+                              imageData.imageStatus == true
+                                  ? const Text(
+                                'Re-capture',
+                                style: TextStyle(fontSize: 12),
+                              )
+                                  : const Text(
+                                'Add a Photo',
+                                style: TextStyle(fontSize: 11),
                               ),
-                            ),
-                          )
-                              .then((value) {
-                            print(value);
-                            imageData = value;
-                            print(imageData.imagePath);
-                            print(imageData.imageStatus);
-
-                            setState(() {});
-                            // print(value[0].toString());
-                            // print(value[1].toString());
-                          });
-                        } catch (e) {
-                          print(e);
-                        }
-                      },
-                      child: Row(
-                        children: [
-                          const Icon(Icons.camera_alt_rounded),
-                          const SizedBox(width: 10),
-                          imageData.imageStatus == true
-                              ? const Text(
-                            'Re-capture',
-                            style: TextStyle(fontSize: 16),
-                          )
-                              : const Text(
-                            'Add a receipt',
-                            style: TextStyle(fontSize: 16),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    height: 50,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          primary: const Color(0xff6D42CE),
-                          onPrimary: Colors.white,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          // padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
-                          textStyle: const TextStyle(
-                              fontSize: 30, fontWeight: FontWeight.bold)),
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          await widget.addItem(
-                              'chairId',
-                              'checkInStatus',
-                              imageData.imagePath.substring(
-                                  imageData.imagePath.lastIndexOf('/')),
-                              imageData.imageStatus);
-
-                          // String chairId, String tagId, String checkInStatus, String imageId, bool isImageUpload
-                          _controller.clear();
-                          _controller2.clear();
-
-                          if (imageData.imageStatus) {
-                            uploadImage();
-                          }
-
-                          imageData.imageStatus = false;
-                          imageData.imagePath = '/noPath';
-                          await showAddItemDoneDialog();
-                          setState(() {});
-                        }
-                      },
-                      child: Row(
-                        children: const [
-                          Icon(
-                            Icons.add_circle_rounded,
-                            color: Color(0xffF5E0C3),
-                          ),
-                          SizedBox(width: 10),
-                          Text(
-                            'Add an Item',
-                            style: TextStyle(
-                                fontSize: 16,
-                                color: Color(0xffF5E0C3),
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                      SizedBox(
+                        width: 10,
                       ),
-                    ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.30,
+                        height: 30,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              primary: const Color(0xffffffff),
+                              onPrimary: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
+                              ),
+                              // padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+                              textStyle: const TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold)),
+                          onPressed: () async {
+                            if (_formKey.currentState!.validate()) {
+                              await widget.addItem(
+                                  'checkInStatus',
+                                  imageData.imagePath.substring(
+                                      imageData.imagePath.lastIndexOf('/')),
+                                  imageData.imageStatus);
+
+                              // String tableId, String tagId, String checkInStatus, String imageId, bool isImageUpload
+                              _controller.clear();
+                              _controller2.clear();
+
+                              if (imageData.imageStatus) {
+                                uploadImage();
+                              }
+
+                              imageData.imageStatus = false;
+                              imageData.imagePath = '/noPath';
+                              await showAddItemDoneDialog();
+                              setState(() {});
+                            }
+                          },
+                          child: Row(
+                            children: const [
+                              Icon(
+                                Icons.add_circle_rounded,
+                                size: 15,
+                                color: Color(0xff242f35),
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                'Upload',
+                                style: TextStyle(
+                                    fontSize: 12,
+                                    color: Color(0xff242f35),
+                                    fontWeight: FontWeight.bold),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
+
                 ],
               ),
             ),
@@ -369,7 +316,7 @@ class _AddSmartChairItemState extends State<AddSmartChairItem> {
       builder: (context) {
         return AlertDialog(
           title: const Text("Congratulations!"),
-          content: const Text("Item is added to Money Tracker"),
+          content: const Text("Card is recorded"),
           actions: <Widget>[
             TextButton(
               child: const Text(
@@ -434,14 +381,14 @@ class _AddSmartChairItemState extends State<AddSmartChairItem> {
   }
 }
 
-class DisplaySmartChairItem extends StatefulWidget {
-  const DisplaySmartChairItem({Key? key, required this.items}) : super(key: key);
-  final List<SmartChairReportMessage> items; // new
+class DisplaySmartTableItem extends StatefulWidget {
+  const DisplaySmartTableItem({Key? key, required this.items}) : super(key: key);
+  final List<SmartTableReportMessage> items; // new
   @override
-  _DisplaySmartChairItemState createState() => _DisplaySmartChairItemState();
+  _DisplaySmartTableItemState createState() => _DisplaySmartTableItemState();
 }
 
-class _DisplaySmartChairItemState extends State<DisplaySmartChairItem> {
+class _DisplaySmartTableItemState extends State<DisplaySmartTableItem> {
   double totolAmount = 0;
   @override
   void initState() {
@@ -476,11 +423,11 @@ class _DisplaySmartChairItemState extends State<DisplaySmartChairItem> {
         //       ],
         //     )),
         SizedBox(
-          height: MediaQuery.of(context).size.height * 0.8,
+          height: MediaQuery.of(context).size.height * 0.25,
           // height: 600,
 
           child: ListView.builder(
-            padding: const EdgeInsets.all(4),
+            padding: const EdgeInsets.all(1),
             itemCount: widget.items.length,
             // shrinkWrap: false,
             // addAutomaticKeepAlives: false,
@@ -489,7 +436,7 @@ class _DisplaySmartChairItemState extends State<DisplaySmartChairItem> {
 
     // final String id;
     // final String name;
-    // final String chairId;
+    // final String tableId;
     // final int timestamp;
     // final String imageId;
     // final bool isImageUpload;
@@ -499,13 +446,14 @@ class _DisplaySmartChairItemState extends State<DisplaySmartChairItem> {
             itemBuilder: (BuildContext context, int index) {
               return ListElement(
                 id: widget.items[index].id,
-                chairId: widget.items[index].chairId,
+                tableId: widget.items[index].tableId,
                 timestamp: widget.items[index].timestamp,
                 imageId: widget.items[index].imageId,
                 isImageUpload: widget.items[index].isImageUpload,
                 tagId: widget.items[index].tagId,
                 checkInStatus: widget.items[index].checkInStatus,
                 iconIndex: widget.items[index].iconIndex,
+                name: widget.items[index].name,
               );
             },
 
@@ -547,23 +495,23 @@ class ApplicationState extends ChangeNotifier {
         _loginState = ApplicationLoginState.loggedIn;
         _email = user.email;
         _spendingReportSubscription = FirebaseFirestore.instance
-            .collection('SmartChairReport')
-            .doc(user.uid)
-            .collection(user.uid)
+            .collection('SmartTableReport')
+            // .doc(user.uid)
+            // .collection(user.uid)
         // .where('userId', isEqualTo: user.uid)
             .orderBy('timestamp', descending: true)
-        // .limit(3)
+        .limit(30)
             .snapshots()
             .listen((snapshot) {
-          _smartChairReportMessages = [];
+          _smartTableReportMessages = [];
           for (final document in snapshot.docs) {
-            _smartChairReportMessages.add(
-              SmartChairReportMessage(
+            _smartTableReportMessages.add(
+              SmartTableReportMessage(
 
 
                 // final String id;
                 // final String name;
-                // final String chairId;
+                // final String tableId;
                 // final int timestamp;
                 // final String imageId;
                 // final bool isImageUpload;
@@ -572,7 +520,7 @@ class ApplicationState extends ChangeNotifier {
 
                 id: document.id,
                 name: document.data()['name'] as String,
-                chairId: document.data()['chairId'] as String,
+                tableId: document.data()['tableId'] as String,
                 timestamp: document.data()['timestamp'] as int,
                 imageId: document.data()['imageId'] as String,
                 isImageUpload: document.data()['isImageUpload'] as bool,
@@ -603,7 +551,7 @@ class ApplicationState extends ChangeNotifier {
         });
       } else {
         _loginState = ApplicationLoginState.loggedOut;
-        _smartChairReportMessages = [];
+        _smartTableReportMessages = [];
         _spendingReportSubscription?.cancel();
         _attendingSubscription?.cancel(); // new
       }
@@ -619,9 +567,9 @@ class ApplicationState extends ChangeNotifier {
   String? get email => _email;
 
   StreamSubscription<QuerySnapshot>? _spendingReportSubscription;
-  List<SmartChairReportMessage> _smartChairReportMessages = [];
-  List<SmartChairReportMessage> get smartChairReportMessages =>
-      _smartChairReportMessages;
+  List<SmartTableReportMessage> _smartTableReportMessages = [];
+  List<SmartTableReportMessage> get smartTableReportMessages =>
+      _smartTableReportMessages;
 
   int _attendees = 0;
   int get attendees => _attendees;
@@ -711,8 +659,8 @@ class ApplicationState extends ChangeNotifier {
     FirebaseAuth.instance.signOut();
   }
 
-  Future<DocumentReference> addMessageToSmartChairReport(
-      String chairId,
+  Future<DocumentReference> addMessageToSmartTableReport(
+      String tableId,
       String imageId,
       bool isImageUpload,
       String tagId,
@@ -725,12 +673,16 @@ class ApplicationState extends ChangeNotifier {
 
 
     return FirebaseFirestore.instance
-        .collection('SmartChairReport')
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .collection(FirebaseAuth.instance.currentUser!.uid)
+        // .collection('SmartTableReport')
+        // .doc(FirebaseAuth.instance.currentUser!.uid)
+        // .collection(FirebaseAuth.instance.currentUser!.uid)
+        // .add(<String, dynamic>{
+        .collection('SmartTableReport')
+        // .doc(FirebaseAuth.instance.currentUser!.uid)
+        // .collection(FirebaseAuth.instance.currentUser!.uid)
         .add(<String, dynamic>{
 
-      'chairId': chairId,
+      'tableId': tableId,
       'tagId': tagId,
       'checkInStatus': checkInStatus,
       'iconIndex': iconIndex,
