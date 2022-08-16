@@ -76,8 +76,8 @@ class LoginPage extends StatelessWidget {
   }
 }
 
-class SpendingReportMessage {
-  SpendingReportMessage({
+class SmartChairReportMessage {
+  SmartChairReportMessage({
     required this.id,
     required this.name,
     required this.price,
@@ -416,7 +416,7 @@ enum Attending { yes, no, unknown }
 
 class DisplaySpendingItem extends StatefulWidget {
   const DisplaySpendingItem({Key? key, required this.items}) : super(key: key);
-  final List<SpendingReportMessage> items; // new
+  final List<SmartChairReportMessage> items; // new
   @override
   _DisplaySpendingItemState createState() => _DisplaySpendingItemState();
 }
@@ -528,10 +528,10 @@ class ApplicationState extends ChangeNotifier {
         // .limit(3)
             .snapshots()
             .listen((snapshot) {
-          _spendingReportMessages = [];
+          _smartChairReportMessages = [];
           for (final document in snapshot.docs) {
-            _spendingReportMessages.add(
-              SpendingReportMessage(
+            _smartChairReportMessages.add(
+              SmartChairReportMessage(
                 id: document.id,
                 name: document.data()['name'] as String,
                 price: document.data()['price'] as String,
@@ -567,7 +567,7 @@ class ApplicationState extends ChangeNotifier {
         });
       } else {
         _loginState = ApplicationLoginState.loggedOut;
-        _spendingReportMessages = [];
+        _smartChairReportMessages = [];
         _spendingReportSubscription?.cancel();
         _attendingSubscription?.cancel(); // new
       }
@@ -583,9 +583,9 @@ class ApplicationState extends ChangeNotifier {
   String? get email => _email;
 
   StreamSubscription<QuerySnapshot>? _spendingReportSubscription;
-  List<SpendingReportMessage> _spendingReportMessages = [];
-  List<SpendingReportMessage> get spendingReportMessages =>
-      _spendingReportMessages;
+  List<SmartChairReportMessage> _smartChairReportMessages = [];
+  List<SmartChairReportMessage> get smartChairReportMessages =>
+      _smartChairReportMessages;
 
   int _attendees = 0;
   int get attendees => _attendees;
