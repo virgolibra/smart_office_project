@@ -85,7 +85,7 @@ class _AddImagePageState extends State<AddImagePage> {
                 width: 250,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                      primary: const Color(0xff6D42CE),
+                      primary: const Color(0xffE09E45),
                       onPrimary: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25),
@@ -114,14 +114,14 @@ class _AddImagePageState extends State<AddImagePage> {
                     children: const [
                       Icon(
                         Icons.camera_rounded,
-                        color: Color(0xffF5E0C3),
+                        color: Color(0xffffffff),
                       ),
                       SizedBox(width: 10),
                       Text(
                         'Click to Capture',
                         style: TextStyle(
                             fontSize: 16,
-                            color: Color(0xffF5E0C3),
+                            color: Color(0xffffffff),
                             fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -194,7 +194,7 @@ class _DisplayPictureScreenState extends State<DisplayPictureScreen> {
           ElevatedButton(
             child: const Text('Continue'),
             style: ElevatedButton.styleFrom(
-                primary: const Color(0xff6D42CE),
+                primary: const Color(0xffE09E45),
                 onPrimary: Colors.white,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),

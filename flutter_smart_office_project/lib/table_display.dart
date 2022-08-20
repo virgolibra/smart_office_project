@@ -169,6 +169,7 @@ class _TableDisplayState extends State<TableDisplay> {
     print('EXAMPLE::Unsubscribing');
     client.unsubscribe(topic1);
     client.unsubscribe(topic2);
+    client.unsubscribe(topic3);
 
     /// Wait for the unsubscribe message from the broker if you wish.
     await MqttUtilities.asyncSleep(1);

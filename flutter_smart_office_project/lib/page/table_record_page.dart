@@ -312,7 +312,7 @@ class _TableRecordPageState extends State<TableRecordPage> {
                               Icons.label_rounded,
                             ),
                             minLeadingWidth: 2,
-                            title: const Text('Category'),
+                            title: const Text('Tag ID'),
                             selected: false,
                             trailing: Text(
                               widget.tagId,

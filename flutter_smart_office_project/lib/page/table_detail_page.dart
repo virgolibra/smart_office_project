@@ -593,6 +593,12 @@ class _TableDetailPageState extends State<TableDetailPage> {
                       onPressed: () async {
                         connect();
                         _state = AppState.DOWNLOADING;
+                        setState(() {
+                          _tagID = '00000000';
+                          _getTagID = '00000000';
+                          isDataCollected = false;
+                        });
+
                       },
                       icon: const Text(
                         'Re-scan',
@@ -660,25 +666,41 @@ class _TableDetailPageState extends State<TableDetailPage> {
                   ],
                 ),
 
-                Consumer<ApplicationState>(
-                  builder: (context, appState, _) => Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      AddSmartTableItem(
-                        addItem: (String checkInStatus, String imageId,
-                                bool isImageUpload) =>
-                            appState.addMessageToSmartTableReport(
-                          widget.tableId,
-                          imageId,
-                          isImageUpload,
-                          _getTagID,
-                          checkInStatus,
-                          buttonOnPressed,
+                isDataCollected
+                    ? Consumer<ApplicationState>(
+                        builder: (context, appState, _) => Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            AddSmartTableItem(
+                              addItem: (String checkInStatus, String imageId,
+                                      bool isImageUpload) =>
+                                  appState.addMessageToSmartTableReport(
+                                widget.tableId,
+                                imageId,
+                                isImageUpload,
+                                _getTagID,
+                                checkInStatus,
+                                buttonOnPressed,
+                              ),
+                            ),
+                          ],
                         ),
+                      )
+                    : Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 14, vertical: 14),
+                        decoration: BoxDecoration(
+                            color: const Color(0xff496571),
+                            borderRadius: BorderRadius.circular(8)),
+                        child: const SizedBox(
+                            height: 100,
+                            width: 300,
+                            child: Text(
+                              "No valid card data. Please swipe the card again",
+                              style:
+                                  TextStyle(color: Colors.white, fontSize: 15),
+                            )),
                       ),
-                    ],
-                  ),
-                ),
               ],
             ),
           ),
