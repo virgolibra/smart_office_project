@@ -375,7 +375,7 @@ class _TableDetailPageState extends State<TableDetailPage> {
                         height: 20,
                       ),
                       Text(
-                        'Press the button to start check-in',
+                        'Press the button to start check-in and check-out',
                         style: TextStyle(
                           color: Colors.black,
                         ),
@@ -394,7 +394,7 @@ class _TableDetailPageState extends State<TableDetailPage> {
                           connect();
                         },
                         icon: const Text(
-                          'Check-in',
+                          'Scan',
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                         label: Icon(
@@ -581,7 +581,7 @@ class _TableDetailPageState extends State<TableDetailPage> {
                   isDataCollected
                       ? "Updated at $formattedTime "
                       : "No valid card data. Please swipe the card again or check the device connection.",
-                  style: TextStyle(color: Colors.black, fontSize: 8),
+                  style: const TextStyle(color: Colors.black, fontSize: 8),
                 ),
                 // Expanded(child: _weatherIconDisplay()),
                 SizedBox(
