@@ -1,0 +1,111 @@
+esphome:
+  name: nodemcu-1
+  on_boot:
+    priority: -10
+    # ...
+    then:
+      - if:
+          condition:
+            binary_sensor.is_off: IR1
+          then:
+            - mqtt.publish:
+                topic: student/CASA0022/ucfnmz0/IR1
+                payload: "OFF"
+          
+
+
+esp8266:
+  board: nodemcuv2
+
+# Example configuration entry
+    
+binary_sensor:
+  - id: IR1
+    platform: gpio
+    filters:
+      - delayed_on: 400ms
+      - delayed_off: 400ms
+      
+    pin:
+      number: D1
+      mode:
+        input: true
+        pullup: true
+      inverted: false
+    name: "IR Sensor v1"
+    device_class: motion
+    on_press:
+      then:
+        - mqtt.publish:
+                topic: student/CASA0022/ucfnmz0/IR1
+                payload: "ON"
+    
+    
+
+mqtt:
+  broker: !secret mqtt_broker
+  port: !secret mqtt_port
+  username: !secret mqtt_username
+  password: !secret mqtt_password
+  log_topic: 
+    topic: student/CASA0022/ucfnmz0/nodemcu1/log
+    level: "DEBUG"
+  birth_message:
+    topic: student/CASA0022/ucfnmz0/nodemcu1/topic
+    payload: online
+  will_message:
+    topic: student/CASA0022/ucfnmz0/nodemcu1/topic
+    payload: offline
+    
+  on_message:
+    - topic: student/CASA0022/ucfnmz0/nodemcu1/ota_mode
+      payload: 'ON'
+      then:
+        - deep_sleep.prevent: deep_sleep_1
+    - topic: student/CASA0022/ucfnmz0/nodemcu1/sleep_mode
+      payload: 'ON'
+      then:
+        - deep_sleep.enter: deep_sleep_1
+    - topic: student/CASA0022/ucfnmz0/nodemcu1/request
+      payload: 'R'
+      then: 
+        - mqtt.publish:
+            topic: student/CASA0022/ucfnmz0/IR_request_1
+            payload: !lambda |- 
+              return esphome::to_string(id(IR1).state);
+
+  
+        
+deep_sleep:
+  id: deep_sleep_1
+  run_duration: 5s
+  sleep_duration: 5min
+    
+
+
+# Enable logging
+logger:
+
+
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "6EAFSYvhRBd0rlmztPYMh1/AAMegfEWNoxlWrXTsDDc="
+
+ota:
+  password: "04e8c6a102a61c3fbdaae103f2ac3bc9"
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  power_save_mode: LIGHT
+  fast_connect: true
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Nodemcu-1 Fallback Hotspot"
+    password: "RRoakI1ECD6I"
+
+captive_portal:
+    
