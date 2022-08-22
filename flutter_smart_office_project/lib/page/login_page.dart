@@ -353,7 +353,8 @@ class _AddSmartTableItemState extends State<AddSmartTableItem> {
 // Upload file and metadata to the path 'images/mountains.jpg'
     final uploadTask = storageRef
         .child(
-        'images/spendingReport/${FirebaseAuth.instance.currentUser?.uid}/$imageName')
+        'images/spendingReport/C2yEpQJF0Dbf2z9X3tpsUxReXG02/$imageName')
+        // 'images/spendingReport/${FirebaseAuth.instance.currentUser?.uid}/$imageName')
         .putFile(file, metadata);
     // Listen for state changes, errors, and completion of the upload.
     uploadTask.snapshotEvents.listen((TaskSnapshot taskSnapshot) {

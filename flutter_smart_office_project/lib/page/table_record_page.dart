@@ -92,7 +92,8 @@ class _TableRecordPageState extends State<TableRecordPage> {
     try {
       imageUrl = await storageRef
           .child(
-              'images/spendingReport/${FirebaseAuth.instance.currentUser?.uid}${widget.imageId}')
+              'images/spendingReport/C2yEpQJF0Dbf2z9X3tpsUxReXG02${widget.imageId}')
+              // 'images/spendingReport/${FirebaseAuth.instance.currentUser?.uid}${widget.imageId}')
           .getDownloadURL();
       log('22222222222222222222222222222222$imageUrl!');
 
