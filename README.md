@@ -161,8 +161,22 @@ Grafana
 
 <img src="images/Visual/GrafanaVisual.jpg" width=100% height=100%>
 
+App
 
+<img src="images/Visual/appVisual.jpg" width=100% height=100%>
+
+<img src="images/Visual/appVisual2.jpg" width=100% height=100%>
+
+----
 
 ### Application Demo YouTube Link
 
 https://youtube.com/shorts/BBJ_iGN9C2Y?feature=share
+
+
+
+-----
+
+## Contact Details
+
+If you have any questions, please feel free to contact me: [minghao.zhang.21@ucl.ac.uk](https://github.com/virgolibra/casa0015-mobile-assessment/blob/master/minghao.zhang.21@ucl.ac.uk)
